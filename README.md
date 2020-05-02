@@ -2,7 +2,9 @@
 An easy md5 hash cracker written in python3
 
 # Description
-A MD5-Hash cracker that is written in python3! 
+A MD5-Hash cracker that is written in python3! The cracker currently supports only MD5-Hashes (more hash types will eventually follow!) I hope you enjoy it! 
+
+I like to hear feedback! Hit me up on Twitter! @BE1807V
 
 
 # Installation
