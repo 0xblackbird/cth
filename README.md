@@ -10,7 +10,7 @@ A MD5-Hash cracker that is written in python3!
 
 `$ cd Hash-Cracker/`
 
-`$ pip install -r requirements.txt`
+`$ pip install -r requirement.txt`
 
 `$ chmod +x hashcracker.py`
 
