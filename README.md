@@ -17,4 +17,4 @@ A MD5-Hash cracker that is written in python3!
 # Usage
 The syntax is easy:
 
-`python3 hashcracker.py --hash 40e219a80dfa2239c096e18bca46fd15 --wordlist /usr/share/wordlists/rockyou.txt`
+`$ python3 hashcracker.py --hash 40e219a80dfa2239c096e18bca46fd15 --wordlist /usr/share/wordlists/rockyou.txt`
