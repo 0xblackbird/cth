@@ -24,3 +24,5 @@ The syntax is easy:
 # Todo list:
 - [x] Publish this
 - [ ] Add more hash types to decrypt/crack
+- [ ] Decrypt/crack multiple hashes at the same time
+- [ ] Add threading
