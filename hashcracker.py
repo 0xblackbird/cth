@@ -25,7 +25,10 @@ Example:
 python3 hashcracker.py --hash 1a79a4d60de6718e8e5b326e338ae533 --wordlist /usr/share/wordlists/rockyou.txt"""
 
 try:
-	if len(sys.argv) == 1:
+	if len(sys.argv) < 1:
+		print("Incorrect syntax!")
+		print(menu)
+	elif len(sys.argv) == 1:
 		print(menu)
 	elif len(sys.argv) == 2:
 		if sys.argv[1] == "-H" or sys.argv[1] == "--help":
@@ -43,10 +46,10 @@ try:
 					user_hash = sys.argv[4]
 					print("Hash: \"{}\"" .format(str(user_hash)))
 					
-					file = open(wordlist, "r", encoding="ISO-8859-1")
-					password = []
-					for line in file:
-						password.append(line.replace("\n", ""))
+					with open(wordlist, "r", encoding="ISO-8859-1") as FileObj:
+						password = []
+						for line in FileObj:
+							password.append(line.replace("\n", ""))
 					
 					print("Everything is set up! Cracking can begin...")
 					
@@ -72,16 +75,16 @@ try:
 			user_hash = sys.argv[2]
 			if sys.argv[3] == "-w" or sys.argv[3] == "--wordlist":
 				wordlist = sys.argv[4]
+				print("Hash: \"{}\"" .format(str(user_hash)))
 				print("Wordlist: \"{}\"" .format(str(wordlist)))
 				if os.path.isfile(wordlist) == True:
 					startTime = time.time()
-					print("Hash: \"{}\"" .format(str(user_hash)))
-					
-					file = open(wordlist, "r", encoding="ISO-8859-1")
-					password = []
-					for line in file:
-						password.append(line.replace("\n", ""))
-					
+										
+					with open(wordlist, "r", encoding="ISO-8859-1") as FileObj:
+						password = []
+						for line in FileObj:
+							password.append(line.replace("\n", ""))
+							
 					print("Everything is set up! Cracking can begin...")
 					
 					for passwd in password:
