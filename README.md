@@ -8,15 +8,15 @@ A MD5-Hash cracker that is written in python3! The cracker currently supports on
 
 
 # Installation
-`$ git clone https://github.com/flemishhacker/Hash-Cracker.git`
+**`$ git clone https://github.com/flemishhacker/Hash-Cracker.git`**
 
-`$ cd Hash-Cracker/`
+**`$ cd Hash-Cracker/`**
 
-`$ pip install -r requirement.txt`
+**`$ pip install -r requirement.txt`**
 
-`$ chmod +x hashcracker.py`
+**`$ chmod +x hashcracker.py`**
 
 # Usage
 The syntax is easy:
 
-`$ python3 hashcracker.py --hash 40e219a80dfa2239c096e18bca46fd15 --wordlist /usr/share/wordlists/rockyou.txt`
+**`$ python3 hashcracker.py --hash 40e219a80dfa2239c096e18bca46fd15 --wordlist /usr/share/wordlists/rockyou.txt`**
