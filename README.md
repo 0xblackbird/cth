@@ -1,7 +1,7 @@
 # Hash Cracker
 An easy hash cracker written in python3
 
-# Updates
+# Update
 - Added 5 more hash types (SHA-1, SHA-224, SHA-256, SHA-384, SHA-512)
 - Added verbose mode
 - Cleaned up the code
@@ -23,7 +23,8 @@ A hash cracker that is written in python3! The cracker currently supports only a
 
 # Usage
 
-`Usage: ./hashcracker.py -H <hash> -w <wordlist> -t <hash type>
+```
+Usage: ./hashcracker.py -H <hash> -w <wordlist> -t <hash type>
 
 Options:
   --version             show program's version number and exit
@@ -34,4 +35,4 @@ Options:
                         "/usr/share/wordlists/rockyou.txt")
   -t NUM, --type=NUM    Type of the hash that you want to crack
   -v, --verbose         Turn on verbosity mode
-  --list                Display all the hash types and exit`
+  --list                Display all the hash types and exit```
