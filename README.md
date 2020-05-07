@@ -35,4 +35,5 @@ Options:
                         "/usr/share/wordlists/rockyou.txt")
   -t NUM, --type=NUM    Type of the hash that you want to crack
   -v, --verbose         Turn on verbosity mode
-  --list                Display all the hash types and exit```
+  --list                Display all the hash types and exit
+```
