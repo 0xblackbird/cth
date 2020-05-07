@@ -1,8 +1,13 @@
-# MD5 Hash Cracker
-An easy md5 hash cracker written in python3
+# Hash Cracker
+An easy hash cracker written in python3
+
+# Updates
+- Added 5 more hash types (SHA-1, SHA-224, SHA-256, SHA-384, SHA-512)
+- Added verbose mode
+- Cleaned up the code
 
 # Description
-A MD5-Hash cracker that is written in python3! The cracker currently supports only MD5-Hashes (more hash types will eventually follow!) I hope you enjoy it! 
+A hash cracker that is written in python3! The cracker currently supports only a limited amount of hash types (more hash types will eventually follow!) I hope you enjoy it! 
 
 **I like to hear feedback! Hit me up on Twitter! [@BE1807V](https://twitter.com/be1807v)**
 
@@ -17,12 +22,16 @@ A MD5-Hash cracker that is written in python3! The cracker currently supports on
 **`$ chmod +x hashcracker.py`**
 
 # Usage
-The syntax is easy:
 
-`$ python3 hashcracker.py -h 40e219a80dfa2239c096e18bca46fd15 -w /usr/share/wordlists/rockyou.txt`
+`Usage: ./hashcracker.py -H <hash> -w <wordlist> -t <hash type>
 
-# Todo list:
-- [x] Publish this
-- [ ] Add more hash types to decrypt/crack
-- [ ] Decrypt/crack multiple hashes at the same time
-- [ ] Add threading
+Options:
+  --version             show program's version number and exit
+  -h, --help            show this help message and exit
+  -H HASH, --hash=HASH  Your hash that you want to crack
+  -w WORDLIST, --wordlist=WORDLIST
+                        The wordlist that is going to do the job (default:
+                        "/usr/share/wordlists/rockyou.txt")
+  -t NUM, --type=NUM    Type of the hash that you want to crack
+  -v, --verbose         Turn on verbosity mode
+  --list                Display all the hash types and exit`
