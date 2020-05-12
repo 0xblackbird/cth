@@ -13,7 +13,7 @@ A hash cracker that is written in python3! The cracker currently supports only a
 
 
 # Installation
-**`$ git clone https://github.com/flemishhacker/Hash-Cracker.git`**
+**`$ git clone https://github.com/be1807v/Hash-Cracker.git`**
 
 **`$ cd Hash-Cracker/`**
 
