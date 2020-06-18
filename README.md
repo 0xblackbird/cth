@@ -2,7 +2,7 @@
 A powerfull hash cracker written in python3
 
 # Update [v1.2]
-- Added alias `-L` for the `--list` flag
+- Added `-L` flag, alias for `--list` flag
 - The `-t` flag is now changed to `-T`
 - Optimized the script
 - Cleaned up the code
