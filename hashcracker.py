@@ -58,7 +58,7 @@ else:
 	print(line)
 	print("Hash: \"{}\"" .format(str(user_hash)))
 		
-if hash_type > 0:
+if hash_type < 0:
 	print("Invalid hash-type! Use \"--list\" to display the all the hash types!")		
 	sys.exit()
 elif hash_type > 5:
@@ -285,7 +285,7 @@ def type_5():
 					sys.exit()
 
 try:
-	if hash_type > 0:
+	if hash_type < 0:
 		print("Invalid hash-type! Use \"--list\" to display the all the hash types!")
 		sys.exit()
 	elif hash_type == 0:
