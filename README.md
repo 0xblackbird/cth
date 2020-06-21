@@ -2,8 +2,8 @@
 A powerfull hash cracker written in python3!
 
 # Update [v1.3]
-- The `-T/--type` flag hash now the value of `0` (no need to specify the type when cracking MD-5 hashes!)
-- Added an indicator when the hash is not found
+- The `-T/--type` flag has now the default value of `0`, so no need to specify the type when cracking MD-5 hashes!
+- Added an output message when the hash is not found
 - Cleaned up the code
 
 # Description
