@@ -1,10 +1,9 @@
 # Hash Cracker
-A powerfull hash cracker written in python3
+A powerfull hash cracker written in python3!
 
-# Update [v1.2]
-- Added `-L` flag, alias for `--list` flag
-- The `-t` flag is now changed to `-T`
-- Optimized the script
+# Update [v1.3]
+- The `-T/--type` flag hash now the value of `0` (no need to specify the type when cracking MD-5 hashes!)
+- Added an indicator when the hash is not found
 - Cleaned up the code
 
 # Description
@@ -35,6 +34,7 @@ Options:
                         The wordlist that is going to do the job (default:
                         "/usr/share/wordlists/rockyou.txt")
   -T NUM, --type=NUM    Specify the hash type, use "-L/--list" for more info
-  -v, --verbose         Turn on verbosity mode
+                        (default: "0" (md-5))
+  -v, --verbose         Turn on verbosity mode (default: "False")
   -L, --list            Display all the hash types and exit
 ```
