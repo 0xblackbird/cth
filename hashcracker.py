@@ -13,11 +13,11 @@ import os.path
 import time
 import sys
 	
-parser = optparse.OptionParser("./%prog -H <hash> -w <wordlist> -T <hash type>", version = "%prog 1.2")
+parser = optparse.OptionParser("./%prog -H <hash> -w <wordlist> -T <hash type>", version = "%prog 1.3")
 parser.add_option("-H", "--hash", dest="hash", type="string", default="", help="Your hash that you want to crack")
 parser.add_option("-w", "--wordlist", dest="wordlist", type="string", default="/usr/share/wordlists/rockyou.txt", help="The wordlist that is going to do the job (default: \"/usr/share/wordlists/rockyou.txt\")")
-parser.add_option("-T", "--type", dest="num", type="int", help="Specify the hash type, use \"-L/--list\" for more info")
-parser.add_option("-v", "--verbose", dest="verbose", action="store_true", default=False, help="Turn on verbosity mode")
+parser.add_option("-T", "--type", dest="num", type="int", default=0, help="Specify the hash type, use \"-L/--list\" for more info (default: \"0\" (md-5))")
+parser.add_option("-v", "--verbose", dest="verbose", action="store_true", default=False, help="Turn on verbosity mode (default: \"False\")")
 parser.add_option("-L", "--list", dest="list_types", action="store_true", default=False, help="Display all the hash types and exit")
 (options, args) = parser.parse_args()
 
@@ -54,7 +54,7 @@ if list_types == True:
 if user_hash == "":
 	print("[-] No hash provided to crack! Use \"-h\" or \"--help\" to display the help menu!")
 	sys.exit()
-else:
+else:	
 	print(line)
 	print("Hash: \"{}\"" .format(str(user_hash)))
 		
@@ -82,7 +82,7 @@ else:
 		sys.exit()
 
 if wordlist == "":
-	print("[-]No wordlist provided! We will use the default!")
+	print("[-] No wordlist provided! We will use the default wordlist!")
 	print("Wordlist: \"{}\"" .format(str(wordlist)))
 	print(line)
 else:
@@ -99,6 +99,7 @@ def checkwordlist():
 	else:
 		print("[-] Error!")
 		sys.exit()
+			
 
 # MD5 (Message Diggest 5)
 def type_0():
@@ -116,6 +117,9 @@ def type_0():
 					deltaTime = endTime - startTime
 					print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
 					sys.exit()
+			print("[-] Hash not found! Maybe try an other wordlist.")
+			sys.exit()
+				
 	else:
 		startTime = time.time()	
 		with open(wordlist, "r", encoding="ISO-8859-1") as FileObj:
@@ -129,6 +133,8 @@ def type_0():
 					deltaTime = endTime - startTime
 					print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
 					sys.exit()
+			print("[-] Hash not found! Maybe try an other wordlist.")
+			sys.exit()
 
 
 # SHA-1 (Secure Hash Algorithm 1)
@@ -147,6 +153,9 @@ def type_1():
 					deltaTime = endTime - startTime
 					print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
 					sys.exit()
+			print("[-] Hash not found! Maybe try an other wordlist.")
+			sys.exit()
+					
 	else:
 		startTime = time.time()	
 		with open(wordlist, "r", encoding="ISO-8859-1") as FileObj:
@@ -160,6 +169,8 @@ def type_1():
 					deltaTime = endTime - startTime
 					print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
 					sys.exit()
+			print("[-] Hash not found! Maybe try an other wordlist.")
+			sys.exit()
 
 
 # SHA-2 (Secure Hash Algorithm 2) [SHA-224]
@@ -177,7 +188,10 @@ def type_2():
 					endTime = time.time()
 					deltaTime = endTime - startTime
 					print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
-					sys.exit()	
+					sys.exit()
+			print("[-] Hash not found! Maybe try an other wordlist.")
+			sys.exit()
+				
 	else:
 		startTime = time.time()	
 		with open(wordlist, "r", encoding="ISO-8859-1") as FileObj:
@@ -191,6 +205,8 @@ def type_2():
 					deltaTime = endTime - startTime
 					print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
 					sys.exit()
+			print("[-] Hash not found! Maybe try an other wordlist.")
+			sys.exit()
 
 
 # SHA-2 (Secure Hash Algorithm 2) [SHA-256]
@@ -209,6 +225,9 @@ def type_3():
 					deltaTime = endTime - startTime
 					print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
 					sys.exit()
+			print("[-] Hash not found! Maybe try an other wordlist.")
+			sys.exit()
+			
 	else:
 		startTime = time.time()	
 		with open(wordlist, "r", encoding="ISO-8859-1") as FileObj:
@@ -222,6 +241,8 @@ def type_3():
 					deltaTime = endTime - startTime
 					print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
 					sys.exit()
+			print("[-] Hash not found! Maybe try an other wordlist.")
+			sys.exit()
 
 # SHA-2 (Secure Hash Algorithm 2) [SHA-384]
 def type_4():
@@ -239,6 +260,9 @@ def type_4():
 					deltaTime = endTime - startTime
 					print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
 					sys.exit()
+			print("[-] Hash not found! Maybe try an other wordlist.")
+			sys.exit()
+			
 	else:
 		startTime = time.time()	
 		with open(wordlist, "r", encoding="ISO-8859-1") as FileObj:
@@ -269,6 +293,9 @@ def type_5():
 					deltaTime = endTime - startTime
 					print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
 					sys.exit()
+			print("[-] Hash not found! Maybe try an other wordlist.")
+			sys.exit()
+			
 	else:
 		startTime = time.time()	
 		with open(wordlist, "r", encoding="ISO-8859-1") as FileObj:
@@ -283,12 +310,11 @@ def type_5():
 					deltaTime = endTime - startTime
 					print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
 					sys.exit()
+			print("[-] Hash not found! Maybe try an other wordlist.")
+			sys.exit()
 
 try:
-	if hash_type < 0:
-		print("Invalid hash-type! Use \"--list\" to display the all the hash types!")
-		sys.exit()
-	elif hash_type == 0:
+	if hash_type == 0:
 		type_0()
 	elif hash_type == 1:
 		type_1()
@@ -301,13 +327,13 @@ try:
 	elif hash_type == 5:
 		type_5()
 	else:
-		print("Invalid hash-type! Use \"--list\" to display the all the hash types!")		
+		print("[-] Invalid hash-type! Use \"-L/--list\" to display the all the hash types!")		
 		sys.exit()
 
 except KeyboardInterrupt:
-	print("\n\"Ctrl+C\" detected! Exiting...")
+	print("\n[-] \"Ctrl+^C\" detected! Exiting...")
 	sys.exit()
 
 except IndexError:
-	print("Index Error arrived! Syntax does not make sens to me! Please check that out!")
+	print("[-] Index Error arrived! Syntax does not make sens to me! Please check that out!")
 	sys.exit()
