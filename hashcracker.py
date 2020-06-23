@@ -303,7 +303,6 @@ def type_5():
 				passwd1 = line.replace("\n", "")
 				passwd_h = hashlib.sha512(passwd1.encode())
 				passwd_hash = passwd_h.hexdigest()
-				print("Trying \"{}\"" .format(str(passwd1)))
 				if user_hash == passwd_hash:
 					print("[+] Hash cracked! Results: " + str(line))
 					endTime = time.time()
