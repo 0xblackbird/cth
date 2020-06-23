@@ -41,5 +41,7 @@ Options:
 
 # Examples
 MD5 hash cracking:
-![Example 1](https://github.com/be1807v/Hash-Cracker/blob/master/example.png)
+![Example 1](https://github.com/be1807v/Hash-Cracker/blob/master/examples/example.png)
 
+SHA1 hash cracking:
+![Example 2](https://github.com/be1807v/Hash-Cracker/blob/master/examples/example-1.png)
