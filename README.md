@@ -45,3 +45,6 @@ MD5 hash cracking:
 
 SHA1 hash cracking:
 ![Example 2](https://github.com/be1807v/Hash-Cracker/blob/master/examples/example-1.png)
+
+SHA-512 hash cracking:
+![Example 3](https://github.com/be1807v/Hash-Cracker/blob/master/examples/example-2.png)
