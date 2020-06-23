@@ -38,3 +38,8 @@ Options:
   -v, --verbose         Turn on verbosity mode (default: "False")
   -L, --list            Display all the hash types and exit
 ```
+
+# Examples
+MD5 hash cracking:
+![Example 1](https://github.com/be1807v/Hash-Cracker/blob/master/example.png)
+
