@@ -39,16 +39,16 @@ Options:
 
 # Examples
 MD5 hash cracking:
-![Example 1](https://github.com/be1807v/Hash-Cracker/blob/master/examples/example.png)
+![Example 0](https://github.com/be1807v/Hash-Cracker/blob/master/examples/example.png)
 
 MD4 hash cracking:
-![Example 2](https://github.com/be1807v/Hash-Cracker/blob/master/examples/example-1.png)
+![Example 1](https://github.com/be1807v/Hash-Cracker/blob/master/examples/example-1.png)
 
 SHA1 hash cracking:
-![Example 3](https://github.com/be1807v/Hash-Cracker/blob/master/examples/example-2.png)
+![Example 2](https://github.com/be1807v/Hash-Cracker/blob/master/examples/example-2.png)
 
 SHA-512 hash cracking:
-![Example 4](https://github.com/be1807v/Hash-Cracker/blob/master/examples/example-3.png)
+![Example 3](https://github.com/be1807v/Hash-Cracker/blob/master/examples/example-3.png)
 
 SHA3-384 hash cracking:
-![Example 5](https://github.com/be1807v/Hash-Cracker/blob/master/examples/example-4.png)
+![Example 4](https://github.com/be1807v/Hash-Cracker/blob/master/examples/example-4.png)
