@@ -2,7 +2,7 @@
 A powerfull hash cracker written in python3!
 
 # Update [v1.4]
-- NEW HASH TYPES ADDED!!! MD4, SHA3-224, SHA3-256, SHA3-384 and SHA3-512
+- New hashtypes added! MD4, SHA3-224, SHA3-256, SHA3-384 and SHA3-512
 
 # Description
 A hash cracker that is written in python3! The cracker currently supports only a limited amount of hash types (more hash types will eventually follow!). The cracking speed depends on your hardware or on the wordlist, you can choose. I hope you enjoy it! 
