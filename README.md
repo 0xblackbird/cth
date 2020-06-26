@@ -1,10 +1,8 @@
 # Hash Cracker
 A powerfull hash cracker written in python3!
 
-# Update [v1.3]
-- The `-T/--type` flag has now the default value of `0`, so no need to specify the type when cracking MD-5 hashes!
-- Added an output message when the hash is not found
-- Cleaned up the code
+# Update [v1.4]
+- NEW HASH TYPES ADDED!!! MD4, SHA3-224, SHA3-256, SHA3-384 and SHA3-512
 
 # Description
 A hash cracker that is written in python3! The cracker currently supports only a limited amount of hash types (more hash types will eventually follow!). The cracking speed depends on your hardware or on the wordlist, you can choose. I hope you enjoy it! 
@@ -17,7 +15,7 @@ A hash cracker that is written in python3! The cracker currently supports only a
 
 **`$ cd Hash-Cracker/`**
 
-**`$ pip install -r requirement.txt`**
+**`$ pip install -r requirements.txt`**
 
 **`$ chmod +x hashcracker.py`**
 
