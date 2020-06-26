@@ -37,10 +37,10 @@ list_menu = """Usage: {} -H <hash> -w <wordlist> -T <hash type>
     |     0    |    MD5   |
     |	  1    |    MD4   |
     |     2    |   SHA1   |
-    |     3    | SHA2-224 |
-    |     4    | SHA2-256 |
-    |     5    | SHA2-384 |
-    |     6    | SHA2-512 |
+    |     3    | SHA-224  |
+    |     4    | SHA-256  |
+    |     5    | SHA-384  |
+    |     6    | SHA-512  |
     |	  7    | SHA3-224 |
     |	  8    | SHA3-256 |
     |     9    | SHA3-384 |
