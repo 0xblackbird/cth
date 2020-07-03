@@ -9,6 +9,9 @@ A hash cracker that is written in python3! The cracker currently supports only a
 
 **I like to hear feedback! Hit me up on Twitter! [@BE1807V](https://twitter.com/be1807v)**
 
+# Todo
+- [ ] Add hash detection
+- [ ] Add multiprocessing
 
 # Installation
 **`$ git clone https://github.com/be1807v/Hash-Cracker.git`**
