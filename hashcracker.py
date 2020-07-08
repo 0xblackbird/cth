@@ -6,15 +6,18 @@
 #     (40e219a80dfa2239c096e18bca46fd15) :)        #
 #						   #
 ####################################################
-import optparse
-import fileinput
-import hashlib
+from concurrent.futures import wait, FIRST_COMPLETED
+from pebble import ProcessPool
 from Crypto.Hash import MD4
+import fileinput
+import optparse
 import os.path
+import hashlib
 import time
 import sys
+import os
 	
-parser = optparse.OptionParser("./%prog -H <hash> -w <wordlist> -T <hash type>", version = "%prog 1.4")
+parser = optparse.OptionParser("./%prog -H <hash> -w <wordlist> -T <hash type>", version = "%prog 1.6")
 parser.add_option("-H", "--hash", dest="hash", type="string", default="", help="Your hash that you want to crack")
 parser.add_option("-w", "--wordlist", dest="wordlist", type="string", default="/usr/share/wordlists/rockyou.txt", help="The wordlist that is going to do the job (default: \"/usr/share/wordlists/rockyou.txt\")")
 parser.add_option("-T", "--type", dest="num", type="int", default=0, help="Specify the hash type, use \"-L/--list\" for more info (default: \"0\" (md-5))")
@@ -28,6 +31,7 @@ hash_type = options.num
 verbose = options.verbose
 list_types = options.list_types
 line = "-" * 110
+startTime = time.time()
 
 list_menu = """Usage: {} -H <hash> -w <wordlist> -T <hash type>
 	
@@ -65,7 +69,7 @@ else:
 	print("Hash: \"{}\"" .format(str(user_hash)))
 		
 if hash_type < 0:
-	print("Invalid hash-type! Use \"--list\" to display the all the hash types!")		
+	print("[-] Invalid hash-type! Use \"--list\" to display the all the hash types!")		
 	sys.exit()
 elif hash_type > 10:
 	print("[-] Invalid hash type! Please check it out!")
@@ -94,7 +98,7 @@ else:
 	elif hash_type == 10:
 		print("Hash type: \"SHA3-512\"")
 	else:
-		print("Invalid hash-type! Use \"--list\" to display the all the hash types!")		
+		print("[-] Invalid hash-type! Use \"--list\" to display the all the hash types!")		
 		sys.exit()
 
 if wordlist == "":
@@ -105,7 +109,6 @@ else:
 	print("Wordlist: \"{}\"" .format(str(wordlist)))
 	print(line)
 
-
 def checkwordlist():
 	if os.path.isfile(wordlist) == True:
 		print("[+] Starting password cracking!")
@@ -115,420 +118,120 @@ def checkwordlist():
 	else:
 		print("[-] Error!")
 		sys.exit()
-			
 
-# MD5 (Message Diggest 5)
-def type_0():
-	if verbose == True:
-		startTime = time.time()		
-		with open(wordlist, "r", encoding="ISO-8859-1") as FileObj:
-			for line in FileObj:
-				passwd1 = line.replace("\n", "")
+def readBackwards():
+	for line in reversed(list(open(wordlist, "r", encoding="ISO-8859-1"))):
+		passwd1 = line.rstrip()
+		if hash_type == 0: #MD5
+			passwd_h = hashlib.md5(passwd1.encode())
+			passwd_hash = passwd_h.hexdigest()
+		elif hash_type == 1: #MD4
+			passwd_h = MD4.new(passwd1.encode())
+			passwd_hash = passwd_h.hexdigest()
+		elif hash_type == 2: #SHA1
+			passwd_h = hashlib.sha1(passwd1.encode())
+			passwd_hash = passwd_h.hexdigest()
+		elif hash_type == 3: #SHA-224
+			passwd_h = hashlib.sha224(passwd1.encode())
+			passwd_hash = passwd_h.hexdigest()
+		elif hash_type == 4: #SHA-256
+			passwd_h = hashlib.sha256(passwd1.encode())
+			passwd_hash = passwd_h.hexdigest()
+		elif hash_type == 5: #SHA-384
+			passwd_h = hashlib.sha384(passwd1.encode())
+			passwd_hash = passwd_h.hexdigest()
+		elif hash_type == 6: #SHA-512
+			passwd_h = hashlib.sha512(passwd1.encode())
+			passwd_hash = passwd_h.hexdigest()
+		elif hash_type == 7: #SHA3-224
+			passwd_h = hashlib.sha3_224(passwd1.encode())
+			passwd_hash = passwd_h.hexdigest()
+		elif hash_type == 8: #SHA3-256
+			passwd_h = hashlib.sha3_256(passwd1.encode())
+			passwd_hash = passwd_h.hexdigest()
+		elif hash_type == 9: #SHA3-384
+			passwd_h = hashlib.sha3_384(passwd1.encode())
+			passwd_hash = passwd_h.hexdigest()
+		elif hash_type == 10: #SHA3-512
+			passwd_h = hashlib.sha3_512(passwd1.encode())
+			passwd_hash = passwd_h.hexdigest()
+		else:
+			print("[-] Invalid hash type...Exiting!")
+			sys.exit()
+		if verbose == True:
+			print("Trying {}" .format(passwd1))
+		if user_hash == passwd_hash:
+			hash_cracked = True
+			print("[+] Hash cracked while reading backwards! Results: " + str(line))
+			endTime = time.time()
+			deltaTime = endTime - startTime
+			print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
+			sys.exit()
+	print("[-] Hash not found! Maybe try an other wordlist.")
+	sys.exit()
+
+
+def readNormal():
+	with open(wordlist, "r", encoding="ISO-8859-1") as FileObj:
+		for line in FileObj:
+			passwd1 = line.replace("\n", "")
+			if hash_type == 0: #MD5
 				passwd_h = hashlib.md5(passwd1.encode())
 				passwd_hash = passwd_h.hexdigest()
-				print("Trying \"{}\"" .format(str(passwd1)))
-				if user_hash == passwd_hash:
-					print("[+] Hash cracked! Results: " + str(line))
-					endTime = time.time()
-					deltaTime = endTime - startTime
-					print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
-					sys.exit()
-			print("[-] Hash not found! Maybe try an other wordlist.")
-			sys.exit()
-				
-	else:
-		startTime = time.time()	
-		with open(wordlist, "r", encoding="ISO-8859-1") as FileObj:
-			for line in FileObj:
-				passwd1 = line.replace("\n", "")
-				passwd_h = hashlib.md5(passwd1.encode())
+			elif hash_type == 1: #MD4
+				passwd_h = MD4.new(passwd1.encode())
 				passwd_hash = passwd_h.hexdigest()
-				if user_hash == passwd_hash:
-					print("[+] Hash cracked! Results: " + str(line))
-					endTime = time.time()
-					deltaTime = endTime - startTime
-					print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
-					sys.exit()
-			print("[-] Hash not found! Maybe try an other wordlist.")
-			sys.exit()
-
-# MD4 (Message Diggest 4)
-def type_1():
-	if verbose == True:
-		startTime = time.time()		
-		with open(wordlist, "r", encoding="ISO-8859-1") as FileObj:
-			for line in FileObj:
-				passwd1 = line.replace("\n", "")
-				passwd_h = MD4.new(passwd1)
-				passwd_hash = passwd_h.hexdigest()
-				print("Trying \"{}\"" .format(str(passwd1)))
-				if user_hash == passwd_hash:
-					print("[+] Hash cracked! Results: " + str(line))
-					endTime = time.time()
-					deltaTime = endTime - startTime
-					print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
-					sys.exit()
-			print("[-] Hash not found! Maybe try an other wordlist.")
-			sys.exit()
-				
-	else:
-		startTime = time.time()	
-		with open(wordlist, "r", encoding="ISO-8859-1") as FileObj:
-			for line in FileObj:
-				passwd1 = line.replace("\n", "")
-				passwd_h = MD4.new(passwd1)
-				passwd_hash = passwd_h.hexdigest()
-				if user_hash == passwd_hash:
-					print("[+] Hash cracked! Results: " + str(line))
-					endTime = time.time()
-					deltaTime = endTime - startTime
-					print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
-					sys.exit()
-			print("[-] Hash not found! Maybe try an other wordlist.")
-			sys.exit()
-
-
-# SHA-1 (Secure Hash Algorithm 1)
-def type_2():
-	if verbose == True:
-		startTime = time.time()	
-		with open(wordlist, "r", encoding="ISO-8859-1") as FileObj:
-			for line in FileObj:
-				passwd1 = line.replace("\n", "")
+			elif hash_type == 2: #SHA1
 				passwd_h = hashlib.sha1(passwd1.encode())
 				passwd_hash = passwd_h.hexdigest()
-				print("Trying \"{}\"" .format(str(passwd1)))
-				if user_hash == passwd_hash:
-					print("[+] Hash cracked! Results: " + str(line))
-					endTime = time.time()
-					deltaTime = endTime - startTime
-					print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
-					sys.exit()
-			print("[-] Hash not found! Maybe try an other wordlist.")
-			sys.exit()
-					
-	else:
-		startTime = time.time()	
-		with open(wordlist, "r", encoding="ISO-8859-1") as FileObj:
-			for line in FileObj:
-				passwd1 = line.replace("\n", "")
-				passwd_h = hashlib.sha1(passwd1.encode())
-				passwd_hash = passwd_h.hexdigest()
-				if user_hash == passwd_hash:
-					print("[+] Hash cracked! Results: " + str(line))
-					endTime = time.time()
-					deltaTime = endTime - startTime
-					print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
-					sys.exit()
-			print("[-] Hash not found! Maybe try an other wordlist.")
-			sys.exit()
-
-
-# SHA-2 (Secure Hash Algorithm 2) [SHA-224]
-def type_3():
-	if verbose == True:
-		startTime = time.time()	
-		with open(wordlist, "r", encoding="ISO-8859-1") as FileObj:
-			for line in FileObj:
-				passwd1 = line.replace("\n", "")
+			elif hash_type == 3: #SHA-224
 				passwd_h = hashlib.sha224(passwd1.encode())
 				passwd_hash = passwd_h.hexdigest()
-				print("Trying \"{}\"" .format(str(passwd1)))
-				if user_hash == passwd_hash:
-					print("[+] Hash cracked! Results: " + str(line))
-					endTime = time.time()
-					deltaTime = endTime - startTime
-					print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
-					sys.exit()
-			print("[-] Hash not found! Maybe try an other wordlist.")
-			sys.exit()
-				
-	else:
-		startTime = time.time()	
-		with open(wordlist, "r", encoding="ISO-8859-1") as FileObj:
-			for line in FileObj:
-				passwd1 = line.replace("\n", "")
-				passwd_h = hashlib.sha224(passwd1.encode())
-				passwd_hash = passwd_h.hexdigest()
-				if user_hash == passwd_hash:
-					print("[+] Hash cracked! Results: " + str(line))
-					endTime = time.time()
-					deltaTime = endTime - startTime
-					print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
-					sys.exit()
-			print("[-] Hash not found! Maybe try an other wordlist.")
-			sys.exit()
-
-
-# SHA-2 (Secure Hash Algorithm 2) [SHA-256]
-def type_4():
-	if verbose == True:
-		startTime = time.time()	
-		with open(wordlist, "r", encoding="ISO-8859-1") as FileObj:
-			for line in FileObj:
-				passwd1 = line.replace("\n", "")
+			elif hash_type == 4: #SHA-256
 				passwd_h = hashlib.sha256(passwd1.encode())
 				passwd_hash = passwd_h.hexdigest()
-				print("Trying \"{}\"" .format(str(passwd1)))
-				if user_hash == passwd_hash:
-					print("[+] Hash cracked! Results: " + str(line))
-					endTime = time.time()
-					deltaTime = endTime - startTime
-					print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
-					sys.exit()
-			print("[-] Hash not found! Maybe try an other wordlist.")
-			sys.exit()
-			
-	else:
-		startTime = time.time()	
-		with open(wordlist, "r", encoding="ISO-8859-1") as FileObj:
-			for line in FileObj:
-				passwd1 = line.replace("\n", "")
-				passwd_h = hashlib.sha256(passwd1.encode())
-				passwd_hash = passwd_h.hexdigest()
-				if user_hash == passwd_hash:
-					print("[+] Hash cracked! Results: " + str(line))
-					endTime = time.time()
-					deltaTime = endTime - startTime
-					print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
-					sys.exit()
-			print("[-] Hash not found! Maybe try an other wordlist.")
-			sys.exit()
-
-# SHA-2 (Secure Hash Algorithm 2) [SHA-384]
-def type_5():
-	if verbose == True:
-		startTime = time.time()
-		with open(wordlist, "r", encoding="ISO-8859-1") as FileObj:
-			for line in FileObj:
-				passwd1 = line.replace("\n", "")
+			elif hash_type == 5: #SHA-384
 				passwd_h = hashlib.sha384(passwd1.encode())
 				passwd_hash = passwd_h.hexdigest()
-				print("Trying \"{}\"" .format(str(passwd1)))
-				if user_hash == passwd_hash:
-					print("[+] Hash cracked! Results: " + str(line))
-					endTime = time.time()
-					deltaTime = endTime - startTime
-					print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
-					sys.exit()
-			print("[-] Hash not found! Maybe try an other wordlist.")
-			sys.exit()
-			
-	else:
-		startTime = time.time()	
-		with open(wordlist, "r", encoding="ISO-8859-1") as FileObj:
-			for line in FileObj:
-				passwd1 = line.replace("\n", "")
-				passwd_h = hashlib.md5(passwd1.encode())
-				passwd_hash = passwd_h.hexdigest()
-				if user_hash == passwd_hash:
-					print("[+] Hash cracked! Results: " + str(line))
-					endTime = time.time()
-					deltaTime = endTime - startTime
-					print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
-					sys.exit()
-	
-# SHA-2 (Secure Hash Algorithm 2) [SHA-512]
-def type_6():
-	if verbose == True:
-		startTime = time.time()	
-		with open(wordlist, "r", encoding="ISO-8859-1") as FileObj:
-			for line in FileObj:
-				passwd1 = line.replace("\n", "")
+			elif hash_type == 6: #SHA-512
 				passwd_h = hashlib.sha512(passwd1.encode())
 				passwd_hash = passwd_h.hexdigest()
-				print("Trying \"{}\"" .format(str(passwd1)))
-				if user_hash == passwd_hash:
-					print("[+] Hash cracked! Results: " + str(line))
-					endTime = time.time()
-					deltaTime = endTime - startTime
-					print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
-					sys.exit()
-			print("[-] Hash not found! Maybe try an other wordlist.")
-			sys.exit()
-			
-	else:
-		startTime = time.time()	
-		with open(wordlist, "r", encoding="ISO-8859-1") as FileObj:
-			for line in FileObj:
-				passwd1 = line.replace("\n", "")
-				passwd_h = hashlib.sha512(passwd1.encode())
-				passwd_hash = passwd_h.hexdigest()
-				if user_hash == passwd_hash:
-					print("[+] Hash cracked! Results: " + str(line))
-					endTime = time.time()
-					deltaTime = endTime - startTime
-					print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
-					sys.exit()
-			print("[-] Hash not found! Maybe try an other wordlist.")
-			sys.exit()
-
-# SHA3-224 (Secure Hash Algorithm 3) [SHA3-224]
-def type_7():
-	if verbose == True:
-		startTime = time.time()	
-		with open(wordlist, "r", encoding="ISO-8859-1") as FileObj:
-			for line in FileObj:
-				passwd1 = line.replace("\n", "")
+			elif hash_type == 7: #SHA3-224
 				passwd_h = hashlib.sha3_224(passwd1.encode())
 				passwd_hash = passwd_h.hexdigest()
-				print("Trying \"{}\"" .format(str(passwd1)))
-				if user_hash == passwd_hash:
-					print("[+] Hash cracked! Results: " + str(line))
-					endTime = time.time()
-					deltaTime = endTime - startTime
-					print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
-					sys.exit()
-			print("[-] Hash not found! Maybe try an other wordlist.")
-			sys.exit()
-			
-	else:
-		startTime = time.time()	
-		with open(wordlist, "r", encoding="ISO-8859-1") as FileObj:
-			for line in FileObj:
-				passwd1 = line.replace("\n", "")
-				passwd_h = hashlib.sha3_224(passwd1.encode())
-				passwd_hash = passwd_h.hexdigest()
-				if user_hash == passwd_hash:
-					print("[+] Hash cracked! Results: " + str(line))
-					endTime = time.time()
-					deltaTime = endTime - startTime
-					print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
-					sys.exit()
-			print("[-] Hash not found! Maybe try an other wordlist.")
-			sys.exit()
-			
-# SHA3-256 (Secure Hash Algorithm 3) [SHA3-256]
-def type_8():
-	if verbose == True:
-		startTime = time.time()	
-		with open(wordlist, "r", encoding="ISO-8859-1") as FileObj:
-			for line in FileObj:
-				passwd1 = line.replace("\n", "")
+			elif hash_type == 8: #SHA3-256
 				passwd_h = hashlib.sha3_256(passwd1.encode())
 				passwd_hash = passwd_h.hexdigest()
-				print("Trying \"{}\"" .format(str(passwd1)))
-				if user_hash == passwd_hash:
-					print("[+] Hash cracked! Results: " + str(line))
-					endTime = time.time()
-					deltaTime = endTime - startTime
-					print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
-					sys.exit()
-			print("[-] Hash not found! Maybe try an other wordlist.")
-			sys.exit()
-			
-	else:
-		startTime = time.time()	
-		with open(wordlist, "r", encoding="ISO-8859-1") as FileObj:
-			for line in FileObj:
-				passwd1 = line.replace("\n", "")
-				passwd_h = hashlib.sha3_256(passwd1.encode())
-				passwd_hash = passwd_h.hexdigest()
-				if user_hash == passwd_hash:
-					print("[+] Hash cracked! Results: " + str(line))
-					endTime = time.time()
-					deltaTime = endTime - startTime
-					print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
-					sys.exit()
-			print("[-] Hash not found! Maybe try an other wordlist.")
-			sys.exit()
-
-# SHA3-384 (Secure Hash Algorithm 3) [SHA3-384]
-def type_9():
-	if verbose == True:
-		startTime = time.time()	
-		with open(wordlist, "r", encoding="ISO-8859-1") as FileObj:
-			for line in FileObj:
-				passwd1 = line.replace("\n", "")
+			elif hash_type == 9: #SHA3-384
 				passwd_h = hashlib.sha3_384(passwd1.encode())
 				passwd_hash = passwd_h.hexdigest()
-				print("Trying \"{}\"" .format(str(passwd1)))
-				if user_hash == passwd_hash:
-					print("[+] Hash cracked! Results: " + str(line))
-					endTime = time.time()
-					deltaTime = endTime - startTime
-					print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
-					sys.exit()
-			print("[-] Hash not found! Maybe try an other wordlist.")
-			sys.exit()
-			
-	else:
-		startTime = time.time()	
-		with open(wordlist, "r", encoding="ISO-8859-1") as FileObj:
-			for line in FileObj:
-				passwd1 = line.replace("\n", "")
-				passwd_h = hashlib.sha3_384(passwd1.encode())
-				passwd_hash = passwd_h.hexdigest()
-				if user_hash == passwd_hash:
-					print("[+] Hash cracked! Results: " + str(line))
-					endTime = time.time()
-					deltaTime = endTime - startTime
-					print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
-					sys.exit()
-			print("[-] Hash not found! Maybe try an other wordlist.")
-			sys.exit()
-			
-# SHA3-512 (Secure Hash Algorithm 3) [SHA3-512]
-def type_10():
-	if verbose == True:
-		startTime = time.time()	
-		with open(wordlist, "r", encoding="ISO-8859-1") as FileObj:
-			for line in FileObj:
-				passwd1 = line.replace("\n", "")
+			elif hash_type == 10: #SHA3-512
 				passwd_h = hashlib.sha3_512(passwd1.encode())
 				passwd_hash = passwd_h.hexdigest()
-				print("Trying \"{}\"" .format(str(passwd1)))
-				if user_hash == passwd_hash:
-					print("[+] Hash cracked! Results: " + str(line))
-					endTime = time.time()
-					deltaTime = endTime - startTime
-					print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
-					sys.exit()
-			print("[-] Hash not found! Maybe try an other wordlist.")
-			sys.exit()
-			
-	else:
-		startTime = time.time()	
-		with open(wordlist, "r", encoding="ISO-8859-1") as FileObj:
-			for line in FileObj:
-				passwd1 = line.replace("\n", "")
-				passwd_h = hashlib.sha3_512(passwd1.encode())
-				passwd_hash = passwd_h.hexdigest()
-				if user_hash == passwd_hash:
-					print("[+] Hash cracked! Results: " + str(line))
-					endTime = time.time()
-					deltaTime = endTime - startTime
-					print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
-					sys.exit()
-			print("[-] Hash not found! Maybe try an other wordlist.")
-			sys.exit()
+			else:
+				print("[-] Invalid hash type...Exiting!")
+				sys.exit()
+			if verbose == True:
+				print("Trying {}" .format(passwd1))
+			if user_hash == passwd_hash:
+				hash_cracked = True
+				print("[+] Hash cracked while reading normal! Results: " + str(line))
+				endTime = time.time()
+				deltaTime = endTime - startTime
+				print("[+] Cracking finished in {}s" .format(str(format(deltaTime, ".2f"))))
+				sys.exit()
+		print("[-] Hash not found! Maybe try an other wordlist.")
+		sys.exit()
 
 try:
-	if hash_type == 0:
-		type_0()
-	elif hash_type == 1:
-		type_1()
-	elif hash_type == 2:
-		type_2()
-	elif hash_type == 3:
-		type_3()
-	elif hash_type == 4:
-		type_4()
-	elif hash_type == 5:
-		type_5()
-	elif hash_type == 6:
-		type_6()
-	elif hash_type == 7:
-		type_7()
-	elif hash_type == 8:
-		type_8()
-	elif hash_type == 9:
-		type_9()
-	elif hash_type == 10:
-		type_10()
-	else:
-		print("[-] Invalid hash-type! Use \"-L/--list\" to display the all the hash types!")		
-		sys.exit()
+	if __name__ == "__main__":
+		startTime = time.time()
+		with ProcessPool(max_workers=2) as pool:
+			f1 = pool.schedule(readNormal)
+			f2 = pool.schedule(readBackwards)
+			done, not_done = wait((f1, f2), return_when=FIRST_COMPLETED)
+			for f in not_done:
+				f.cancel()
 
 except KeyboardInterrupt:
 	print("\n[-] \"Ctrl+^C\" detected! Exiting...")
