@@ -1,22 +1,24 @@
 # Hash Cracker
 A powerfull hash cracker written in python3!
 
-# Update [v1.4]
-- New hashtypes added! MD4, SHA3-224, SHA3-256, SHA3-384 and SHA3-512
+# Update [v1.6]
+- Rewrited the tool.
+- Added multiprocessing, now it will be 2x faster to crack hashes!
+- Fixed some errors
 
 # Description
-A hash cracker that is written in python3! The cracker currently supports only a limited amount of hash types (more hash types will eventually follow!). The cracking speed depends on your hardware or on the wordlist, you can choose. I hope you enjoy it! 
+A powerfull hash cracker that is written in python3! The cracker currently supports only a limited amount of hash types (more hash types will eventually follow!). The cracking speed depends on your hardware or on the wordlist, you can choose. I hope you enjoy it!
 
 **I like to hear feedback! Hit me up on Twitter! [@BE1807V](https://twitter.com/be1807v)**
 
 # Todo
 - [ ] Add hash detection
-- [ ] Add multiprocessing
+- [X] Add multiprocessing
 
 # Installation
-**`$ git clone https://github.com/be1807v/Hash-Cracker.git`**
+**`$ git clone https://github.com/be1807v/Hash-Cracker.git` hashcracker**
 
-**`$ cd Hash-Cracker/`**
+**`$ cd hashcracker/`**
 
 **`$ pip install -r requirements.txt`**
 
