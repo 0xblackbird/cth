@@ -3,7 +3,7 @@
 ####################################################
 #                                                  #
 #           Code made by @BE1807                   #
-#     (40e219a80dfa2239c096e18bca46fd15) :)        #
+#     (40e219a80dfa2239c096e18bca46fd15) :))       #
 #						   #
 ####################################################
 from concurrent.futures import wait, FIRST_COMPLETED
