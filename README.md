@@ -2,7 +2,7 @@
 A powerfull hash cracker written in python3!
 
 # Update [v1.6]
-- Rewrited the tool.
+- Rewrote the tool.
 - Added multiprocessing, now it will be 2x faster to crack hashes!
 - Fixed some errors
 
