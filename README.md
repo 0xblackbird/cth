@@ -16,7 +16,7 @@ A powerfull hash cracker that is written in python3! The cracker currently suppo
 - [X] Add multiprocessing
 
 # Installation
-**`$ git clone https://github.com/be1807v/Hash-Cracker.git` hashcracker**
+**`$ git clone https://github.com/be1807v/Hash-Cracker.git hashcracker`**
 
 **`$ cd hashcracker/`**
 
