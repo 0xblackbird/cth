@@ -13,6 +13,8 @@ A powerfull hash cracker that is written in python3! The cracker currently suppo
 
 # Todo
 - [ ] Add hash detection
+- [ ] Add more hashtypes to crack
+- [ ] Add colors to the output
 - [X] Add multiprocessing
 
 # Installation
