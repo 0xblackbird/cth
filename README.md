@@ -3,11 +3,11 @@ A powerfull hash cracker written in python3!
 
 # Update [v1.7]
 - Added a new hashtype! MD-2
-- Output is now colored!
+- Colors are added to the output!
 - Fixed some bugs.
 
 # Description
-A powerfull hash cracker that is written in python3! The cracker currently supports only a limited amount of hash types (more hash types will eventually follow!). The cracking speed depends on your hardware or on the wordlist, you can choose. I hope you enjoy it!
+A powerfull hash cracker that is written in python3! The cracker currently supports only a limited amount of hash types (more hash types will eventually follow!). The cracking speed depends on your hardware or on the wordlist, you can choose. I hope you enjoy it! Feedback on the tool is appreciated! Also, feel free to contribute and make a pull request! That's why I choosed for Open Source :)!
 
 **I like to hear feedback! Hit me up on Twitter! [@BE1807V](https://twitter.com/be1807v)**
 
