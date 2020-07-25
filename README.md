@@ -1,10 +1,10 @@
 # Hash Cracker
 A powerfull hash cracker written in python3!
 
-# Update [v1.6]
-- Rewrote the tool.
-- Added multiprocessing, now it will be 2x faster to crack hashes!
-- Fixed some errors
+# Update [v1.7]
+- Added a new hashtype! MD-2
+- Output is now colored!
+- Fixed some bugs.
 
 # Description
 A powerfull hash cracker that is written in python3! The cracker currently supports only a limited amount of hash types (more hash types will eventually follow!). The cracking speed depends on your hardware or on the wordlist, you can choose. I hope you enjoy it!
@@ -14,7 +14,7 @@ A powerfull hash cracker that is written in python3! The cracker currently suppo
 # Todo
 - [ ] Add hash detection
 - [ ] Add more hashtypes to crack
-- [ ] Colored output
+- [X] Colored output
 - [X] Add multiprocessing
 
 # Installation
