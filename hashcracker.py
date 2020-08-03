@@ -10,7 +10,6 @@ from concurrent.futures import wait, FIRST_COMPLETED
 from pebble import ProcessPool
 from Crypto.Hash import MD2
 from Crypto.Hash import MD4
-from Crypto.Hash import HMAC
 import fileinput
 import optparse
 import os.path
@@ -19,7 +18,7 @@ import time
 import sys
 import os
 	
-parser = optparse.OptionParser("./%prog -H <hash> -w <wordlist> -T <hash type>", version = "%prog 1.7")
+parser = optparse.OptionParser("./%prog -H <hash> -w <wordlist> -T <hash type>", version = "%prog 1.8")
 parser.add_option("-H", "--hash", dest="hash", type="string", default="", help="Your hash that you want to crack")
 parser.add_option("-w", "--wordlist", dest="wordlist", type="string", default="/usr/share/wordlists/rockyou.txt", help="The wordlist that is going to do the job (default: \"/usr/share/wordlists/rockyou.txt\")")
 parser.add_option("-T", "--type", dest="num", type="int", default=0, help="Specify the hash type, use \"-L/--list\" for more info (default: \"0\" (md-5))")
@@ -39,10 +38,12 @@ class color:
    PURPLE = '\033[1;35;48m'
    CYAN = '\033[1;36;48m'
    BLUE = '\033[1;34;48m'
+   ORANGE = '\033[1;38;48m'
    GREEN = '\033[1;32;48m'
    YELLOW = '\033[1;33;48m'
    RED = '\033[1;31;48m'
    BLACK = '\033[1;30;48m'
+   BLINK = '\033[1;6;48m'
    END = '\033[1;37;0m'
 
 list_menu = """Usage: {} -H <hash> -w <wordlist> -T <hash type>
@@ -75,11 +76,11 @@ if list_types == True:
 	print(list_menu .format(str(sys.argv[0])))
 	sys.exit()
 if user_hash == "":
-	print(color.RED + "[-] No hash provided to crack! Use \"-h\" or \"--help\" to display the help menu!" + color.END)
+	print(color.BLINK + color.RED + "[-] No hash provided to crack! Use \"-h\" or \"--help\" to display the help menu!" + color.END)
 	sys.exit()
 else:	
-	print(color.GREEN + line + color.END)
-	print(color.BLACK + "Hash: \"{}\"" .format(str(user_hash)) + color.END)
+	print(color.BLACK + line + color.END)
+	print(color.CYAN + "Hash: " + color.RED + str(user_hash) + color.END)
 		
 if hash_type < 0:
 	print(color.RED + "[-] Invalid hash-type! Use \"--list\" to display the all the hash types!" + color.END)		
@@ -89,44 +90,44 @@ elif hash_type > 10:
 	sys.exit()
 else:
 	if hash_type == 0:
-		print(color.BLACK + "Hash type: \"MD5\"" + color.END)
+		print(color.CYAN + "Hash type: " + color.RED + "\"MD5\"" + color.END)
 	elif hash_type == 1:
-		print(color.BLACK + "Hash type: \"MD4\"" + color.END)
+		print(color.CYAN + "Hash type: " + color.RED + "\"MD4\"" + color.END)
 	elif hash_type == 2:
-		print(color.BLACK + "Hash type: \"MD2\"" + color.END)
+		print(color.CYAN + "Hash type: " + color.RED + "\"MD2\"" + color.END)
 	elif hash_type == 3:
-		print(color.BLACK + "Hash type: \"SHA-1\"" + color.END)
+		print(color.CYAN + "Hash type: " + color.RED + "\"SHA-1\"" + color.END)
 	elif hash_type == 4:
-		print(color.BLACK + "Hash type: \"SHA-224\"" + color.END)
+		print(color.CYAN + "Hash type: " + color.RED + "\"SHA-224\"" + color.END)
 	elif hash_type == 5:
-		print(color.BLACK + "Hash type: \"SHA-256\"" + color.END)
+		print(color.CYAN + "Hash type: " + color.RED + "\"SHA-256\"" + color.END)
 	elif hash_type == 6:
-		print(color.BLACK + "Hash type: \"SHA-384\"" + color.END)
+		print(color.CYAN + "Hash type: " + color.RED + "\"SHA-384\"" + color.END)
 	elif hash_type == 7:
-		print(color.BLACK + "Hash type: \"SHA-512\"" + color.END)
+		print(color.CYAN + "Hash type: " + color.RED + "\"SHA-512\"" + color.END)
 	elif hash_type == 8:
-		print(color.BLACK + "Hash type: \"SHA3-224\"" + color.END)
+		print(color.CYAN + "Hash type: " + color.RED + "\"SHA3-224\"" + color.END)
 	elif hash_type == 9:
-		print(color.BLACK + "Hash type: \"SHA3-256\"" + color.END)
+		print(color.CYAN + "Hash type: " + color.RED + "\"SHA3-256\"" + color.END)
 	elif hash_type == 10:
-		print(color.BLACK + "Hash type: \"SHA3-384\"" + color.END)
+		print(color.CYAN + "Hash type: " + color.RED + "\"SHA3-384\"" + color.END)
 	elif hash_type == 11:
-		print(color.BLACK + "Hash type: \"SHA3-512\"" + color.END)
+		print(color.CYAN + "Hash type: " + color.RED + "\"SHA3-512\"" + color.END)
 	else:
 		print(color.RED + "[-] Invalid hash-type! Use \"--list\" to display the all the hash types!" + color.END)		
 		sys.exit()
 
 if wordlist == "":
 	print(color.RED + "[-] No wordlist provided! Hashcracker will use the default wordlist (rockyou.txt)!" + color.END)
-	print(color.BLACK + "Wordlist: \"{}\"" .format(str(wordlist)) + color.END)
-	print(color.GREEN + line + color.END)
+	print(color.CYAN + "Wordlist: " + color.RED + "\"" + str(wordlist) + "\"" + color.END)
+	print(color.BLACK + line + color.END)
 else:
-	print(color.BLACK + "Wordlist: \"{}\"" .format(str(wordlist)) + color.END)
-	print(color.GREEN + line + color.END)
+	print(color.CYAN + "Wordlist: " + color.RED + "\"" + str(wordlist) + "\"" + color.END)
+	print(color.BLACK + line + color.END)
 
 def checkwordlist():
 	if os.path.isfile(wordlist) == True:
-		print(color.YELLOW + "[+] Starting password cracking!" + color.END)
+		print(color.ORANGE + "[+] Starting password cracking!" + color.END)
 	elif os.path.isfile(wordlist) == False:
 		print(color.RED + "[-] \"{}\" does not exist! If you think that it really exists, try checking it once more!" .format(str(wordlist)) + color.END)
 		sys.exit()
@@ -180,13 +181,13 @@ def readBackwards():
 			print(color.BLACK + "Trying {}" .format(str(repr(passwd1))) + color.END)
 		if user_hash == passwd_hash:
 			hash_cracked = True
-			print(color.GREEN + "[+] Hash cracked! Results: " + str(line) + color.END)
+			print(color.GREEN + "[+] Hash cracked! Results: " + color.RED + str(line) + color.END)
 			endTime = time.time()
 			deltaTime = endTime - startTime
 			sys.stdout.write("\033[F")
-			print(color.GREEN + "[+] Cracking finished in {}s" .format(str(format(deltaTime, ".3f"))) + color.END)
+			print(color.GREEN + "[+] Cracking finished in " + color.BLINK + color.RED + str(format(deltaTime, ".3f")) + color.END + color.GREEN + "s" + color.END)
 			sys.exit()
-	print(color.RED + "[-] Hash not found! Maybe try an other wordlist." + color.END)
+	print(color.BLINK + color.RED + "[-] Hash not found! Maybe try an other wordlist." + color.END)
 	sys.exit()
 
 
@@ -237,13 +238,13 @@ def readNormal():
 				print(color.BLACK + "Trying {}" .format(str(repr(passwd1))) + color.END)
 			if user_hash == passwd_hash:
 				hash_cracked = True
-				print(color.GREEN + "[+] Hash cracked! Results: " + str(line) + color.END)
+				print(color.GREEN + "[+] Hash cracked! Results: " + color.RED + str(line) + color.END)
 				endTime = time.time()
 				deltaTime = endTime - startTime
 				sys.stdout.write("\033[F")
-				print(color.GREEN + "[+] Cracking finished in {}s" .format(str(format(deltaTime, ".3f"))) + color.END)
+				print(color.GREEN + "[+] Cracking finished in " + color.BLINK + color.RED + str(format(deltaTime, ".3f")) + color.END + color.GREEN + "s" + color.END)
 				sys.exit()
-		print(color.RED + "[-] Hash not found! Maybe try an other wordlist." + color.END)
+		print(color.BLINK + color.RED + "[-] Hash not found! Maybe try an other wordlist." + color.END)
 		sys.exit()
 
 try:
@@ -260,7 +261,6 @@ try:
 except KeyboardInterrupt:
 	print(color.RED + "\n[-] \"Ctrl+^C\" detected! Exiting..." + color.END)
 	sys.exit()
-
 except IndexError:
 	print(color.RED + "[-] Index Error: syntax does not make sens to me! Please check that out!" + color.END)
 	sys.exit()
