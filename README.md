@@ -18,6 +18,8 @@ A powerfull hash cracker that is written in python3! The cracker currently suppo
 - [ ] Add hash detection
 - [ ] Add more hashtypes to crack
 - [ ] Cracking multiple hashes at the same time
+- [ ] Using GPU for cracking hashes
+- [ ] Using CPU to crack hashes
 
 # Installation
 **`$ git clone https://github.com/be1807v/cth.git cth`**
