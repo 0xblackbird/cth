@@ -92,7 +92,7 @@ if interactive == True:
 	sys.stdout.write("\033[F")
 
 
-	question = "What type is the hash you provided? Leave blank if it is an MD-5: \n"
+	question = "What type is the hash you provided? : \n"
 	print(color.BLUE)
 	for i in question:
 		print(i, end = "")
