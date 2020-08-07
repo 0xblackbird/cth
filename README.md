@@ -1,8 +1,13 @@
-# Hash Cracker
-A powerfull hash cracker written in python3!
+# Crack The Hash
+Ultra fast hashcracking tool written in Python3
 
-# Update [v1.8]
-- Colors are updated
+# Update [v2.0]
+- Renamed the tool
+- Added 3 new flags! (-o/-output, -oJ/-output-json, -i/-interactive)
+- Added 2 new hashtypes! (BLAKE2s, BLAKE2b)
+- Added a pretty banner hash been added!
+- Added interactive mode!
+- You can now output the results in 2 formats, plain text and/or JSON!
 
 # Description
 A powerfull hash cracker that is written in python3! The cracker currently supports only a limited amount of hash types (more hash types will eventually follow!). The cracking speed depends on your hardware or on the wordlist, you can choose. I hope you enjoy it! Feedback on the tool is appreciated! Also, feel free to contribute and make a pull request! That's why I choosed for Open Source :)!
@@ -12,48 +17,44 @@ A powerfull hash cracker that is written in python3! The cracker currently suppo
 # Todo
 - [ ] Add hash detection
 - [ ] Add more hashtypes to crack
-- [X] Colored output
-- [X] Add multiprocessing
+- [ ] Cracking multiple hashes at the same time
 
 # Installation
-**`$ git clone https://github.com/be1807v/Hash-Cracker.git hashcracker`**
+**`$ git clone https://github.com/be1807v/cth.git cth`**
 
-**`$ cd hashcracker/`**
+**`$ cd cth/`**
 
 **`$ pip install -r requirements.txt`**
 
-**`$ chmod +x hashcracker.py`**
+**`$ chmod +x cth.py`**
 
 # Usage
 
 ```
-Usage: ./hashcracker.py -H <hash> -w <wordlist> -T <hash type>
+usage: ./cth.py -H <HASH> [OPTIONS] -T <NUM> -w <WORDLIST>
 
-Options:
-  --version             show program's version number and exit
-  -h, --help            show this help message and exit
-  -H HASH, --hash=HASH  Your hash that you want to crack
-  -w WORDLIST, --wordlist=WORDLIST
-                        The wordlist that is going to do the job (default:
-                        "/usr/share/wordlists/rockyou.txt")
-  -T NUM, --type=NUM    Specify the hash type, use "-L/--list" for more info
-                        (default: "0" (md-5))
-  -v, --verbose         Turn on verbosity mode (default: "False")
-  -L, --list            Display all the hash types and exit
+Ultra fast hashcracking tool written in Python3
+
+optional arguments:
+  -h, --help         show this help message and exit
+  -H H, -hash H      Your hash that you want to crack
+  -w W, -wordlist W  The wordlist that is going to do the job (default: "/usr/share/wordlists/rockyou.txt")
+  -T T, -type T      Specify the hash type, use "-L/-list" for more info (default: "0" (md-5))
+  -o, -output        Output the result in a text file (default: "False")
+  -oJ, -output-json  Output the result in JSON format (default: "False")
+  -I, -interactive   Go through steps instead of typing all the flags manually
+  -v, -verbose       Turn on verbosity mode (default: "False")
+  -L, -list          Display all the hash types and exit
+  -V, -version       show program's version number and exit
+
 ```
 
 # Examples
 MD5 hash cracking:
-![Example 0](https://github.com/be1807v/Hash-Cracker/blob/master/examples/example.png)
+![Example 0](https://github.com/be1807v/cth/blob/master/examples/example.png)
 
-MD4 hash cracking:
-![Example 1](https://github.com/be1807v/Hash-Cracker/blob/master/examples/example-1.png)
+SHA3-512 hash cracking:
+![Example 1](https://github.com/be1807v/cth/blob/master/examples/example-1.png)
 
-SHA1 hash cracking:
-![Example 2](https://github.com/be1807v/Hash-Cracker/blob/master/examples/example-2.png)
-
-SHA-512 hash cracking:
-![Example 3](https://github.com/be1807v/Hash-Cracker/blob/master/examples/example-3.png)
-
-SHA3-384 hash cracking:
-![Example 4](https://github.com/be1807v/Hash-Cracker/blob/master/examples/example-4.png)
+BLAKE2s hash cracking:
+![Example 2](https://github.com/be1807v/cth/blob/master/examples/example-2.png)
