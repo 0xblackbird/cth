@@ -89,8 +89,8 @@ if interactive == True:
 		print(color.RED + "[-] No hash provided! Goodbye." + color.END)
 		sys.exit()
 	sys.stdout.write("\033[F")
-		
-	
+
+
 	question = "What type is the hash you provided? Leave blank if it is an MD-5: \n"
 	print(color.BLUE)
 	for i in question:
@@ -101,7 +101,7 @@ if interactive == True:
 	sys.stdout.write("\033[F")
 	if hash_type == "":
 		hash_type = 0
-	
+
 	question = "What wordlist do you want to use? Leave blank to use the default wordlist: \n"
 	print(color.BLUE)
 	for i in question:
@@ -110,9 +110,9 @@ if interactive == True:
 		time.sleep(0.025)
 	wordlist = str(input(color.BLUE + ">>> " + color.RED))
 	sys.stdout.write("\033[F")
-	
-list_menu = color.ORANGE + """Usage: .//%(prog)s -H <HASH> [OPTIONS] -T <NUM> -w <WORDLIST>
-	
+
+list_menu = color.ORANGE + """Usage: ./cth.py -H <HASH> [OPTIONS] -T <NUM> -w <WORDLIST>
+
 	   Hash types:
      _____________________
     |          |          |
@@ -131,7 +131,7 @@ list_menu = color.ORANGE + """Usage: .//%(prog)s -H <HASH> [OPTIONS] -T <NUM> -w
     |    12    |  BLAKE2s |
     |    13    |  BLAKE2b |
     |__________|__________|
-    
+
     More comming soon! ;)""" + color.END
 
 if len(sys.argv) == 0:
@@ -143,10 +143,10 @@ if list_types == True:
 if user_hash == "":
 	print(color.BLINK + color.RED + "[-] No hash provided to crack! Use \"-h\" or \"--help\" to display the help menu!" + color.END)
 	sys.exit()
-else:	
+else:
 	print(color.BLACK + line + color.END)
 	print(color.CYAN + "Hash: " + color.RED + "\"" + str(user_hash) + "\"" + color.END)
-		
+
 if hash_type < 0:
 	print(color.RED + "[-] Invalid hash-type! Use \"-list\" to display the all the hash types!" + color.END)		
 	sys.exit()
