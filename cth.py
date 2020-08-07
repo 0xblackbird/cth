@@ -12,6 +12,7 @@ from Crypto.Hash import MD2
 from Crypto.Hash import MD4
 from random import uniform
 import fileinput
+import whirlpool
 import argparse
 import binascii
 import os.path
@@ -92,7 +93,7 @@ if interactive == True:
 	sys.stdout.write("\033[F")
 
 
-	question = "What type is the hash you provided? : \n"
+	question = "What type is the hash you provided? \n"
 	print(color.BLUE)
 	for i in question:
 		print(i, end = "")
@@ -115,24 +116,25 @@ if interactive == True:
 list_menu = color.ORANGE + """Usage: ./cth.py -H <HASH> [OPTIONS] -T <NUM> -w <WORDLIST>
 
 	   Hash types:
-     _____________________
-    |          |          |
-    |     0    |    MD5   |
-    |     1    |    MD4   |
-    |     2    |    MD2   |
-    |     3    |   SHA1   |
-    |     4    |  SHA-224 |
-    |     5    |  SHA-256 |
-    |     6    |  SHA-384 |
-    |     7    |  SHA-512 |
-    |     8    | SHA3-224 |
-    |     9    | SHA3-256 |
-    |    10    | SHA3-384 |
-    |    11    | SHA3-512 |
-    |    12    |  BLAKE2s |
-    |    13    |  BLAKE2b |
-    |    14    |    NTLM  |
-    |__________|__________|
+     ______________________
+    |          |           |
+    |     0    |    MD5    |
+    |     1    |    MD4    |
+    |     2    |    MD2    |
+    |     3    |   SHA1    |
+    |     4    |  SHA-224  |
+    |     5    |  SHA-256  |
+    |     6    |  SHA-384  |
+    |     7    |  SHA-512  |
+    |     8    |  SHA3-224 |
+    |     9    |  SHA3-256 |
+    |    10    |  SHA3-384 |
+    |    11    |  SHA3-512 |
+    |    12    |  BLAKE2s  |
+    |    13    |  BLAKE2b  |
+    |    14    |   NTLM    |
+    |    15    | Whirlpool |
+    |__________|___________|
 
     More comming soon! ;)""" + color.END
 
@@ -183,6 +185,8 @@ else:
 		print(color.CYAN + "Hash type: " + color.RED + "\"BLAKE2b\"" + color.END)
 	elif hash_type == 14:
 		print(color.CYAN + "Hash type: " + color.RED + "\"NTLM\"" + color.END)
+	elif hash_type == 15:
+		print(color.CYAN + "Hash type: " + color.RED + "\"Whirlpool\"" + color.END)
 	else:
 		print(color.RED + "[-] Invalid hash-type! Use \"-list\" to display the all the hash types!" + color.END)		
 		sys.exit()
@@ -210,50 +214,37 @@ def readBackwards():
 	for line in reversed(list(open(wordlist, "r", encoding="ISO-8859-1"))):
 		passwd1 = line.rstrip()
 		if hash_type == 0: #MD5
-			passwd_h = hashlib.md5(passwd1.encode())
-			passwd_hash = passwd_h.hexdigest()
+			passwd_hash = hashlib.md5(passwd1.encode()).hexdigest()
 		elif hash_type == 1: #MD4
-			passwd_h = MD4.new(passwd1.encode())
-			passwd_hash = passwd_h.hexdigest()
+			passwd_hash = MD4.new(passwd1.encode()).hexdigest()
 		elif hash_type == 2: #MD2
-			passwd_h = MD2.new(passwd1.encode())
-			passwd_hash = passwd_h.hexdigest()
+			passwd_h = MD2.new(passwd1.encode()).hexdigest()
 		elif hash_type == 3: #SHA1
-			passwd_h = hashlib.sha1(passwd1.encode())
-			passwd_hash = passwd_h.hexdigest()
+			passwd_h = hashlib.sha1(passwd1.encode()).hexdigest()
 		elif hash_type == 4: #SHA-224
-			passwd_h = hashlib.sha224(passwd1.encode())
-			passwd_hash = passwd_h.hexdigest()
+			passwd_h = hashlib.sha224(passwd1.encode()).hexdigest()
 		elif hash_type == 5: #SHA-256
-			passwd_h = hashlib.sha256(passwd1.encode())
-			passwd_hash = passwd_h.hexdigest()
+			passwd_h = hashlib.sha256(passwd1.encode()).hexdigest()
 		elif hash_type == 6: #SHA-384
-			passwd_h = hashlib.sha384(passwd1.encode())
-			passwd_hash = passwd_h.hexdigest()
+			passwd_h = hashlib.sha384(passwd1.encode()).hexdigest()
 		elif hash_type == 7: #SHA-512
-			passwd_h = hashlib.sha512(passwd1.encode())
-			passwd_hash = passwd_h.hexdigest()
+			passwd_h = hashlib.sha512(passwd1.encode()).hexdigest()
 		elif hash_type == 8: #SHA3-224
-			passwd_h = hashlib.sha3_224(passwd1.encode())
-			passwd_hash = passwd_h.hexdigest()
+			passwd_h = hashlib.sha3_224(passwd1.encode()).hexdigest()
 		elif hash_type == 9: #SHA3-256
-			passwd_h = hashlib.sha3_256(passwd1.encode())
-			passwd_hash = passwd_h.hexdigest()
+			passwd_h = hashlib.sha3_256(passwd1.encode()).hexdigest()
 		elif hash_type == 10: #SHA3-384
-			passwd_h = hashlib.sha3_384(passwd1.encode())
-			passwd_hash = passwd_h.hexdigest()
+			passwd_h = hashlib.sha3_384(passwd1.encode()).hexdigest()
 		elif hash_type == 11: #SHA3-512
-			passwd_h = hashlib.sha3_512(passwd1.encode())
-			passwd_hash = passwd_h.hexdigest()
+			passwd_h = hashlib.sha3_512(passwd1.encode()).hexdigest()
 		elif hash_type == 12: #BLAKE2s
-			passwd_h = hashlib.blake2s(passwd1.encode())
-			passwd_hash = passwd_h.hexdigest()
+			passwd_h = hashlib.blake2s(passwd1.encode()).hexdigest()
 		elif hash_type == 13: #BLAKE2b
-			passwd_h = hashlib.blake2b(passwd1.encode())
-			passwd_hash = passwd_h.hexdigest()
+			passwd_h = hashlib.blake2b(passwd1.encode()).hexdigest()
 		elif hash_type == 14: #NTLM
-			passwd_h = hashlib.new('md4', passwd1.encode('utf-16le')).hexdigest()
-			passwd_hash = passwd_h
+			passwd_hash = hashlib.new('md4', passwd1.encode('utf-16le')).hexdigest()
+		elif hash_type == 15: #Whirlpool
+			passwd_hash = whirlpool.new(passwd1.encode()).hexdigest()
 		else:
 			print(color.RED + "[-] Invalid hash type...Exiting!" + color.END)
 			sys.exit()
@@ -288,50 +279,37 @@ def readNormal():
 		for line in FileObj:
 			passwd1 = line.replace("\n", "")
 			if hash_type == 0: #MD5
-				passwd_h = hashlib.md5(passwd1.encode())
-				passwd_hash = passwd_h.hexdigest()
+				passwd_hash = hashlib.md5(passwd1.encode()).hexdigest()
 			elif hash_type == 1: #MD4
-				passwd_h = MD4.new(passwd1.encode())
-				passwd_hash = passwd_h.hexdigest()
+				passwd_hash = MD4.new(passwd1.encode()).hexdigest()
 			elif hash_type == 2: #MD2
-				passwd_h = MD2.new(passwd1.encode())
-				passwd_hash = passwd_h.hexdigest()
+				passwd_h = MD2.new(passwd1.encode()).hexdigest()
 			elif hash_type == 3: #SHA1
-				passwd_h = hashlib.sha1(passwd1.encode())
-				passwd_hash = passwd_h.hexdigest()
+				passwd_h = hashlib.sha1(passwd1.encode()).hexdigest()
 			elif hash_type == 4: #SHA-224
-				passwd_h = hashlib.sha224(passwd1.encode())
-				passwd_hash = passwd_h.hexdigest()
+				passwd_h = hashlib.sha224(passwd1.encode()).hexdigest()
 			elif hash_type == 5: #SHA-256
-				passwd_h = hashlib.sha256(passwd1.encode())
-				passwd_hash = passwd_h.hexdigest()
+				passwd_h = hashlib.sha256(passwd1.encode()).hexdigest()
 			elif hash_type == 6: #SHA-384
-				passwd_h = hashlib.sha384(passwd1.encode())
-				passwd_hash = passwd_h.hexdigest()
+				passwd_h = hashlib.sha384(passwd1.encode()).hexdigest()
 			elif hash_type == 7: #SHA-512
-				passwd_h = hashlib.sha512(passwd1.encode())
-				passwd_hash = passwd_h.hexdigest()
+				passwd_h = hashlib.sha512(passwd1.encode()).hexdigest()
 			elif hash_type == 8: #SHA3-224
-				passwd_h = hashlib.sha3_224(passwd1.encode())
-				passwd_hash = passwd_h.hexdigest()
+				passwd_h = hashlib.sha3_224(passwd1.encode()).hexdigest()
 			elif hash_type == 9: #SHA3-256
-				passwd_h = hashlib.sha3_256(passwd1.encode())
-				passwd_hash = passwd_h.hexdigest()
+				passwd_h = hashlib.sha3_256(passwd1.encode()).hexdigest()
 			elif hash_type == 10: #SHA3-384
-				passwd_h = hashlib.sha3_384(passwd1.encode())
-				passwd_hash = passwd_h.hexdigest()
+				passwd_h = hashlib.sha3_384(passwd1.encode()).hexdigest()
 			elif hash_type == 11: #SHA3-512
-				passwd_h = hashlib.sha3_512(passwd1.encode())
-				passwd_hash = passwd_h.hexdigest()
+				passwd_h = hashlib.sha3_512(passwd1.encode()).hexdigest()
 			elif hash_type == 12: #BLAKE2s
-				passwd_h = hashlib.blake2s(passwd1.encode())
-				passwd_hash = passwd_h.hexdigest()
+				passwd_h = hashlib.blake2s(passwd1.encode()).hexdigest()
 			elif hash_type == 13: #BLAKE2b
-				passwd_h = hashlib.blake2b(passwd1.encode())
-				passwd_hash = passwd_h.hexdigest()
+				passwd_h = hashlib.blake2b(passwd1.encode()).hexdigest()
 			elif hash_type == 14: #NTLM
-				passwd_h = hashlib.new('md4', passwd1.encode('utf-16le')).hexdigest()
-				passwd_hash = passwd_h
+				passwd_hash = hashlib.new('md4', passwd1.encode('utf-16le')).hexdigest()
+			elif hash_type == 15: #Whirlpool
+				passwd_hash = whirlpool.new(passwd1.encode()).hexdigest()
 			else:
 				print(color.RED + "[-] Invalid hash type...Exiting!" + color.END)
 				sys.exit()

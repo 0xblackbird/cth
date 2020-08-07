@@ -4,7 +4,7 @@ Ultra fast hashcracking tool written in Python3
 # Update [v2.0]
 - Renamed the tool
 - Added 3 new flags! (-o/-output, -oJ/-output-json, -i/-interactive)
-- Added 3 new hashtypes! (NTLM, BLAKE2s, BLAKE2b)
+- Added 4 new hashtypes! (NTLM, Whirlpool, BLAKE2s, BLAKE2b)
 - A pretty banner hash been added!
 - Interactive mode has been implemented!
 - You can now output the results in different 2 formats, plain text and/or JSON!
