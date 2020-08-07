@@ -5,9 +5,9 @@ Ultra fast hashcracking tool written in Python3
 - Renamed the tool
 - Added 3 new flags! (-o/-output, -oJ/-output-json, -i/-interactive)
 - Added 2 new hashtypes! (BLAKE2s, BLAKE2b)
-- Added a pretty banner hash been added!
-- Added interactive mode!
-- You can now output the results in 2 formats, plain text and/or JSON!
+- A pretty banner hash been added!
+- Interactive mode has been implemented!
+- You can now output the results in different 2 formats, plain text and/or JSON!
 
 # Description
 A powerfull hash cracker that is written in python3! The cracker currently supports only a limited amount of hash types (more hash types will eventually follow!). The cracking speed depends on your hardware or on the wordlist, you can choose. I hope you enjoy it! Feedback on the tool is appreciated! Also, feel free to contribute and make a pull request! That's why I choosed for Open Source :)!
