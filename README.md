@@ -33,8 +33,6 @@ A powerfull hash cracker that is written in python3! The cracker currently suppo
 ```
 usage: ./cth.py -H <HASH> [OPTIONS] -T <NUM> -w <WORDLIST>
 
-Ultra fast hashcracking tool written in Python3
-
 optional arguments:
   -h, --help         show this help message and exit
   -H H, -hash H      Your hash that you want to crack
