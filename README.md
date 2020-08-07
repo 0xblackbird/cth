@@ -58,3 +58,6 @@ SHA3-512 hash cracking:
 
 BLAKE2s hash cracking:
 ![Example 2](https://github.com/be1807v/cth/blob/master/examples/example-2.png)
+
+NTLM hash cracking:
+![Example 3](https://github.com/be1807v/cth/blob/master/examples/example-3.png)
