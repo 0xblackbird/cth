@@ -13,6 +13,7 @@ from Crypto.Hash import MD4
 from random import uniform
 import fileinput
 import argparse
+import binascii
 import os.path
 import hashlib
 import time
@@ -130,6 +131,7 @@ list_menu = color.ORANGE + """Usage: ./cth.py -H <HASH> [OPTIONS] -T <NUM> -w <W
     |    11    | SHA3-512 |
     |    12    |  BLAKE2s |
     |    13    |  BLAKE2b |
+    |    14    |    NTLM  |
     |__________|__________|
 
     More comming soon! ;)""" + color.END
@@ -149,9 +151,6 @@ else:
 
 if hash_type < 0:
 	print(color.RED + "[-] Invalid hash-type! Use \"-list\" to display the all the hash types!" + color.END)		
-	sys.exit()
-elif hash_type > 13:
-	print(color.RED + "[-] Invalid hash type! Please check it out!" + color.RED)
 	sys.exit()
 else:
 	if hash_type == 0:
@@ -182,6 +181,8 @@ else:
 		print(color.CYAN + "Hash type: " + color.RED + "\"BLAKE2s\"" + color.END)
 	elif hash_type == 13:
 		print(color.CYAN + "Hash type: " + color.RED + "\"BLAKE2b\"" + color.END)
+	elif hash_type == 14:
+		print(color.CYAN + "Hash type: " + color.RED + "\"NTLM\"" + color.END)
 	else:
 		print(color.RED + "[-] Invalid hash-type! Use \"-list\" to display the all the hash types!" + color.END)		
 		sys.exit()
@@ -250,6 +251,9 @@ def readBackwards():
 		elif hash_type == 13: #BLAKE2b
 			passwd_h = hashlib.blake2b(passwd1.encode())
 			passwd_hash = passwd_h.hexdigest()
+		elif hash_type == 14: #NTLM
+			passwd_h = hashlib.new('md4', passwd1.encode('utf-16le')).hexdigest()
+			passwd_hash = passwd_h
 		else:
 			print(color.RED + "[-] Invalid hash type...Exiting!" + color.END)
 			sys.exit()
@@ -325,6 +329,9 @@ def readNormal():
 			elif hash_type == 13: #BLAKE2b
 				passwd_h = hashlib.blake2b(passwd1.encode())
 				passwd_hash = passwd_h.hexdigest()
+			elif hash_type == 14: #NTLM
+				passwd_h = hashlib.new('md4', passwd1.encode('utf-16le')).hexdigest()
+				passwd_hash = passwd_h
 			else:
 				print(color.RED + "[-] Invalid hash type...Exiting!" + color.END)
 				sys.exit()
