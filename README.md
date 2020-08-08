@@ -1,13 +1,8 @@
 # Crack The Hash
 Ultra fast hashcracking tool written in Python3
 
-# Update [v2.0]
-- Renamed the tool
-- Added 3 new flags! (-o/-output, -oJ/-output-json, -i/-interactive)
-- Added 4 new hashtypes! (NTLM, Whirlpool, BLAKE2s, BLAKE2b)
-- A pretty banner hash been added!
-- Interactive mode has been implemented!
-- You can now output the results in different 2 formats, plain text and/or JSON!
+# Update [v2.1]
+- New flag has been added (-u/-update) to update your current version of the script
 
 # Description
 A powerfull hash cracker that is written in python3! The cracker currently supports only a limited amount of hash types (more hash types will eventually follow!). The cracking speed depends on your hardware or on the wordlist, you can choose. I hope you enjoy it! Feedback on the tool is appreciated! Also, feel free to contribute and make a pull request! That's why I choosed for Open Source :)!
@@ -45,6 +40,7 @@ optional arguments:
   -I, -interactive   Go through steps instead of typing all the flags manually
   -v, -verbose       Turn on verbosity mode (default: "False")
   -L, -list          Display all the hash types and exit
+  -u, -update        Update the script
   -V, -version       show program's version number and exit
 
 ```
