@@ -11,8 +11,9 @@ from pebble import ProcessPool
 from Crypto.Hash import MD2
 from Crypto.Hash import MD4
 from random import uniform
+from datetime import date
+import urllib.request
 import fileinput
-import whirlpool
 import argparse
 import binascii
 import os.path
@@ -31,7 +32,8 @@ parser.add_argument("-oJ", "-output-json", action="store_true", default=False, h
 parser.add_argument("-I", "-interactive", action="store_true", default=False, help="Go through steps instead of typing all the flags manually")
 parser.add_argument("-v", "-verbose", action="store_true", default=False, help="Turn on verbosity mode (default: \"False\")")
 parser.add_argument("-L", "-list", action="store_true", default=False, help="Display all the hash types and exit")
-parser.add_argument("-V", "-version", action="version", version="%(prog)s 2.0")
+parser.add_argument("-u", "-update", action="store_true", default=False, help="Update the script")
+parser.add_argument("-V", "-version", action="version", version="%(prog)s 2.2")
 args = parser.parse_args()
 
 user_hash = args.H
@@ -41,9 +43,11 @@ verbose = args.v
 output = args.o
 output_json = args.oJ
 list_types = args.L
+update = args.u
 interactive = args.I
 line = "-" * 110
 startTime = time.time()
+version = "2.2"
 
 class color:
 	PURPLE = '\033[1;35;48m'
@@ -78,6 +82,35 @@ typeText("CRACK THE HASH", 0.035)
 print(color.CYAN)
 sys.stdout.write("\033[F")
 typeText("@BE1807V", 0.035)
+
+if update == True:
+	file = os.path.abspath("cth.py")
+	url = "https://be1807v.github.io/cth.py"
+	
+	if os.path.isfile(file) == False:
+		print(color.RED + "[-] Error! I could not find the script to update! Please provide the installation path:" + color.END)
+		file = str(input(color.BLUE + ">>> " + color.RED))
+	
+	## Check if it's already updated
+	get_data = urllib.request.urlopen("https://be1807v.github.io/cth.json")
+	if get_data.getcode() == 200:
+		jdata = get_data.read()
+		jsonData = json.loads(jdata)
+		current_version = jsonData["version"]
+		if current_version == version:
+			print(color.GREEN + "[+] You already have the latest version of CTH! v" + current_version + color.END)
+			sys.exit()
+		elif current_version != version:
+			with urllib.request.urlopen(url) as response, open(file, "wb") as out_file:
+				data = response.read()
+				out_file.write(data)
+			print(color.GREEN + "[+] CTH is successfully updated! v" + current_version + color.END)
+			sys.exit()
+		else:
+			print(color.RED + "[-] An error has occurred. Exiting..." + color.END)
+			sys.exit()
+	else:
+		print(color.RED + "[-] An error has occurred while trying to reach a JSON file. Status code: " + str(get_status.getcode()) + color.END)
 
 if interactive == True:
 	question = "Please provide the hash that you want to crack: \n"
@@ -116,25 +149,27 @@ if interactive == True:
 list_menu = color.ORANGE + """Usage: ./cth.py -H <HASH> [OPTIONS] -T <NUM> -w <WORDLIST>
 
 	   Hash types:
-     ______________________
-    |          |           |
-    |     0    |    MD5    |
-    |     1    |    MD4    |
-    |     2    |    MD2    |
-    |     3    |   SHA1    |
-    |     4    |  SHA-224  |
-    |     5    |  SHA-256  |
-    |     6    |  SHA-384  |
-    |     7    |  SHA-512  |
-    |     8    |  SHA3-224 |
-    |     9    |  SHA3-256 |
-    |    10    |  SHA3-384 |
-    |    11    |  SHA3-512 |
-    |    12    |  BLAKE2s  |
-    |    13    |  BLAKE2b  |
-    |    14    |   NTLM    |
-    |    15    | Whirlpool |
-    |__________|___________|
+     _____________________________
+    |              |              |
+    |      0       |     MD5      |
+    |      1       |     MD4      |
+    |      2       |     MD2      |
+    |      3       |    SHA1      |
+    |      4       |   SHA-224    |
+    |      5       |   SHA-256    |
+    |      6       |   SHA-384    |
+    |      7       |   SHA-512    |
+    |      8       |   SHA3-224   |
+    |      9       |   SHA3-256   |
+    |     10       |   SHA3-384   |
+    |     11       |   SHA3-512   |
+    |     12       |  BLAKE2s256  |
+    |     13       |  BLAKE2b512  |
+    |     14       |    NTLM      |
+    |     15       |  Whirlpool   |
+    |     16       |     SM3      |
+    |     17       |  RIPEMD-160  |
+    |______________|______________|
 
     More comming soon! ;)""" + color.END
 
@@ -180,13 +215,17 @@ else:
 	elif hash_type == 11:
 		print(color.CYAN + "Hash type: " + color.RED + "\"SHA3-512\"" + color.END)
 	elif hash_type == 12:
-		print(color.CYAN + "Hash type: " + color.RED + "\"BLAKE2s\"" + color.END)
+		print(color.CYAN + "Hash type: " + color.RED + "\"BLAKE2s256\"" + color.END)
 	elif hash_type == 13:
-		print(color.CYAN + "Hash type: " + color.RED + "\"BLAKE2b\"" + color.END)
+		print(color.CYAN + "Hash type: " + color.RED + "\"BLAKE2b512\"" + color.END)
 	elif hash_type == 14:
 		print(color.CYAN + "Hash type: " + color.RED + "\"NTLM\"" + color.END)
 	elif hash_type == 15:
 		print(color.CYAN + "Hash type: " + color.RED + "\"Whirlpool\"" + color.END)
+	elif hash_type == 16:
+		print(color.CYAN + "Hash type: " + color.RED + "\"SM3\"" + color.END)
+	elif hash_type == 17:
+		print(color.CYAN + "Hash type: " + color.RED + "\"RIPEMD-160\"" + color.END)
 	else:
 		print(color.RED + "[-] Invalid hash-type! Use \"-list\" to display the all the hash types!" + color.END)		
 		sys.exit()
@@ -237,14 +276,18 @@ def readBackwards():
 			passwd_h = hashlib.sha3_384(passwd1.encode()).hexdigest()
 		elif hash_type == 11: #SHA3-512
 			passwd_h = hashlib.sha3_512(passwd1.encode()).hexdigest()
-		elif hash_type == 12: #BLAKE2s
-			passwd_h = hashlib.blake2s(passwd1.encode()).hexdigest()
-		elif hash_type == 13: #BLAKE2b
-			passwd_h = hashlib.blake2b(passwd1.encode()).hexdigest()
+		elif hash_type == 12: #BLAKE2s256
+			passwd_h = hashlib.new('blake2s256', passwd1.encode()).hexdigest()
+		elif hash_type == 13: #BLAKE2b512
+			passwd_h = hashlib.new('blake2b512', passwd1.encode()).hexdigest()
 		elif hash_type == 14: #NTLM
 			passwd_hash = hashlib.new('md4', passwd1.encode('utf-16le')).hexdigest()
 		elif hash_type == 15: #Whirlpool
-			passwd_hash = whirlpool.new(passwd1.encode()).hexdigest()
+			passwd_hash = hashlib.new('whirlpool', passwd1.encode()).hexdigest()
+		elif hash_type == 16: #SM3
+			passwd_hash = hashlib.new('sm3', passwd1.encode()).hexdigest()
+		elif hash_type == 17: #RIPEMD-160
+			passwd_hash = hashlib.new('ripemd160', passwd1.encode()).hexdigest()
 		else:
 			print(color.RED + "[-] Invalid hash type...Exiting!" + color.END)
 			sys.exit()
@@ -258,16 +301,19 @@ def readBackwards():
 			sys.stdout.write("\033[F")
 			print(color.GREEN + "[+] Cracking finished in " + color.RED + str(format(deltaTime, ".3f")) + color.END + color.GREEN + "s" + color.END)
 			if output == True:
-				print("[+] Hash cracked! Results: " + str(line) + "[+] Cracking finished in " + str(format(deltaTime, ".3f")) + "s", file=open("results.txt", "a"))
+				output_text = "\nDate: {0}\nHash: {1}\nCracked hash: {2}\nCracking time: {3}\nWordlist: {4}" .format(str(today.strftime("%d/%m/%Y")), str(user_hash), str(line).replace("\n", ""), format(deltaTime, ".3f"), str(wordlist))
+				print(output_text, file=open("results.txt", "a"))
 				print(color.ORANGE + "Results saved successfully in ./results.txt!" + color.END)
 			if output_json == True:
 				results = {
-					"Hash": str(user_hash),
-					"Cracked hash": str(line).replace("\n",""),
-					"Time":format(deltaTime, ".3f")
+					"date": str(today.strftime("%d/%m/%Y")),
+					"hash": str(user_hash),
+					"crackedHash": str(line).replace("\n",""),
+					"crackingTime": format(deltaTime, ".3f"),
+					"wordlist": str(wordlist)
 				}
 				results_json = json.dumps(results, indent=2)
-				print(results_json, file=open("results.json", "w"))
+				print(results_json, file=open("results.json", "a"))
 				print(color.ORANGE + "Results saved successfully in ./results.json!" + color.END)
 			sys.exit()
 	print(color.RED + "[-] Hash not found! Maybe another wordlist would help." + color.END)
@@ -302,37 +348,43 @@ def readNormal():
 				passwd_h = hashlib.sha3_384(passwd1.encode()).hexdigest()
 			elif hash_type == 11: #SHA3-512
 				passwd_h = hashlib.sha3_512(passwd1.encode()).hexdigest()
-			elif hash_type == 12: #BLAKE2s
-				passwd_h = hashlib.blake2s(passwd1.encode()).hexdigest()
-			elif hash_type == 13: #BLAKE2b
-				passwd_h = hashlib.blake2b(passwd1.encode()).hexdigest()
+			elif hash_type == 12: #BLAKE2s256
+				passwd_h = hashlib.new('blake2s256', passwd1.encode()).hexdigest()
+			elif hash_type == 13: #BLAKE2b512
+				passwd_h = hashlib.new('blake2b512', passwd1.encode()).hexdigest()
 			elif hash_type == 14: #NTLM
 				passwd_hash = hashlib.new('md4', passwd1.encode('utf-16le')).hexdigest()
 			elif hash_type == 15: #Whirlpool
-				passwd_hash = whirlpool.new(passwd1.encode()).hexdigest()
+				passwd_hash = hashlib.new('whirlpool', passwd1.encode()).hexdigest()
+			elif hash_type == 16: #SM3
+				passwd_hash = hashlib.new('sm3', passwd1.encode()).hexdigest()
+			elif hash_type == 17: #RIPEMD-160
+				passwd_hash = hashlib.new('ripemd160', passwd1.encode()).hexdigest()
 			else:
 				print(color.RED + "[-] Invalid hash type...Exiting!" + color.END)
 				sys.exit()
 			if verbose == True:
 				print(color.BLACK + "Trying {}" .format(str(repr(passwd1))) + color.END)
 			if user_hash == passwd_hash:
-				hash_cracked = True
 				print(color.GREEN + "[+] Hash cracked! Results: " + color.RED + str(line) + color.END)
 				endTime = time.time()
 				deltaTime = endTime - startTime
 				sys.stdout.write("\033[F")
 				print(color.GREEN + "[+] Cracking finished in " + color.RED + str(format(deltaTime, ".3f")) + color.END + color.GREEN + "s" + color.END)
 				if output == True:
-					print("[+] Hash cracked! Results: " + str(line) + "[+] Cracking finished in " + str(format(deltaTime, ".3f")) + "s", file=open("results.txt", "a"))
+					output_text = "\nDate: {0}\nHash: {1}\nCracked hash: {2}\nCracking time: {3}\nWordlist: {4}" .format(str(today.strftime("%d/%m/%Y")), str(user_hash), str(line).replace("\n", ""), format(deltaTime, ".3f"), str(wordlist))
+					print(output_text, file=open("results.txt", "a"))
 					print(color.ORANGE + "Results saved successfully in ./results.txt!" + color.END)
 				if output_json == True:
 					results = {
-						"Hash": str(user_hash),
-						"Cracked hash": str(line).replace("\n",""),
-						"Time": format(deltaTime, ".3f")
+						"Date": str(today.strftime("%d/%m/%Y")),
+						"hash": str(user_hash),
+						"crackedHash": str(line).replace("\n", ""),
+						"crackingTime": format(deltaTime, ".3f"),
+						"wordlist": str(wordlist)
 					}
 					results_json = json.dumps(results, indent=2)
-					print(results_json, file=open("results.json", "w"))
+					print(results_json, file=open("results.json", "a"))
 					print(color.ORANGE + "Results saved successfully in ./results.json!" + color.END)
 				sys.exit()
 		print(color.RED + "[-] Hash not found! Maybe another wordlist would help." + color.END)
@@ -341,6 +393,7 @@ def readNormal():
 try:
 	if __name__ == "__main__":
 		startTime = time.time()
+		today = date.today()
 		checkwordlist()
 		with ProcessPool(max_workers=2) as pool:
 			f1 = pool.schedule(readNormal)
@@ -353,10 +406,10 @@ except KeyboardInterrupt:
 	print(color.RED + "\n[-] \"Ctrl+^C\" detected! Exiting..." + color.END)
 	sys.exit()
 except IndexError:
-	print(color.RED + " \n[-] Index Error: syntax does not make sens to me! Please check that out!" + color.END)
+	print(color.RED + "\n[-] Index Error: syntax does not make sens to me! Please check that out!" + color.END)
 	sys.exit()
 except SyntaxError:
-	print(color.RED + " \n[-] Syntax error! Please kindly check what you executed." + color.END)
+	print(color.RED + "\n[-] Syntax error! Please kindly check what you executed." + color.END)
 	sys.exit()
 except TypeError:
-	print(color.RED + " \n[-] Wrong value type given! Please kindly check what values you gave in." + color.END)
+	print(color.RED + "\n[-] Wrong value type given! Please kindly check what values you gave in." + color.END)
