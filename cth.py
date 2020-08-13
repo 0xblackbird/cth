@@ -313,7 +313,7 @@ def readBackwards():
 				results_json = json.dumps(results, indent=2)
 				print(results_json, file=open("results.json", "a"))
 				print(color.ORANGE + "Results saved successfully in ./results.json!" + color.END)
-			#sys.exit()
+			sys.exit()
 	print(color.RED + "[-] Hash not found! Maybe another wordlist would help." + color.END)
 	sys.exit()
 
