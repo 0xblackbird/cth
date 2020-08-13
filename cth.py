@@ -33,7 +33,7 @@ parser.add_argument("-I", "-interactive", action="store_true", default=False, he
 parser.add_argument("-v", "-verbose", action="store_true", default=False, help="Turn on verbosity mode (default: \"False\")")
 parser.add_argument("-L", "-list", action="store_true", default=False, help="Display all the hash types and exit")
 parser.add_argument("-u", "-update", action="store_true", default=False, help="Update the script")
-parser.add_argument("-V", "-version", action="version", version="%(prog)s 2.2")
+parser.add_argument("-V", "-version", action="version", version="%(prog)s 2.3")
 args = parser.parse_args()
 
 user_hash = args.H
@@ -47,7 +47,7 @@ update = args.u
 interactive = args.I
 line = "-" * 110
 startTime = time.time()
-version = "2.2"
+version = "2.3"
 
 class color:
 	PURPLE = '\033[1;35;48m'
@@ -91,7 +91,6 @@ if update == True:
 		print(color.RED + "[-] Error! I could not find the script to update! Please provide the installation path:" + color.END)
 		file = str(input(color.BLUE + ">>> " + color.RED))
 	
-	## Check if it's already updated
 	get_data = urllib.request.urlopen("https://be1807v.github.io/cth.json")
 	if get_data.getcode() == 200:
 		jdata = get_data.read()
@@ -257,29 +256,29 @@ def readBackwards():
 		elif hash_type == 1: #MD4
 			passwd_hash = MD4.new(passwd1.encode()).hexdigest()
 		elif hash_type == 2: #MD2
-			passwd_h = MD2.new(passwd1.encode()).hexdigest()
+			passwd_hash = MD2.new(passwd1.encode()).hexdigest()
 		elif hash_type == 3: #SHA1
-			passwd_h = hashlib.sha1(passwd1.encode()).hexdigest()
+			passwd_hash = hashlib.sha1(passwd1.encode()).hexdigest()
 		elif hash_type == 4: #SHA-224
-			passwd_h = hashlib.sha224(passwd1.encode()).hexdigest()
+			passwd_hash = hashlib.sha224(passwd1.encode()).hexdigest()
 		elif hash_type == 5: #SHA-256
-			passwd_h = hashlib.sha256(passwd1.encode()).hexdigest()
+			passwd_hash = hashlib.sha256(passwd1.encode()).hexdigest()
 		elif hash_type == 6: #SHA-384
-			passwd_h = hashlib.sha384(passwd1.encode()).hexdigest()
+			passwd_hash = hashlib.sha384(passwd1.encode()).hexdigest()
 		elif hash_type == 7: #SHA-512
-			passwd_h = hashlib.sha512(passwd1.encode()).hexdigest()
+			passwd_hash = hashlib.sha512(passwd1.encode()).hexdigest()
 		elif hash_type == 8: #SHA3-224
-			passwd_h = hashlib.sha3_224(passwd1.encode()).hexdigest()
+			passwd_hash = hashlib.sha3_224(passwd1.encode()).hexdigest()
 		elif hash_type == 9: #SHA3-256
-			passwd_h = hashlib.sha3_256(passwd1.encode()).hexdigest()
+			passwd_hash = hashlib.sha3_256(passwd1.encode()).hexdigest()
 		elif hash_type == 10: #SHA3-384
-			passwd_h = hashlib.sha3_384(passwd1.encode()).hexdigest()
+			passwd_hash = hashlib.sha3_384(passwd1.encode()).hexdigest()
 		elif hash_type == 11: #SHA3-512
-			passwd_h = hashlib.sha3_512(passwd1.encode()).hexdigest()
+			passwd_hash = hashlib.sha3_512(passwd1.encode()).hexdigest()
 		elif hash_type == 12: #BLAKE2s256
-			passwd_h = hashlib.new('blake2s256', passwd1.encode()).hexdigest()
+			passwd_hash = hashlib.new('blake2s256', passwd1.encode()).hexdigest()
 		elif hash_type == 13: #BLAKE2b512
-			passwd_h = hashlib.new('blake2b512', passwd1.encode()).hexdigest()
+			passwd_hash = hashlib.new('blake2b512', passwd1.encode()).hexdigest()
 		elif hash_type == 14: #NTLM
 			passwd_hash = hashlib.new('md4', passwd1.encode('utf-16le')).hexdigest()
 		elif hash_type == 15: #Whirlpool
@@ -294,7 +293,6 @@ def readBackwards():
 		if verbose == True:
 			print(color.BLACK + "Trying {}" .format(str(repr(passwd1))) + color.END)
 		if user_hash == passwd_hash:
-			hash_cracked = True
 			print(color.GREEN + "[+] Hash cracked! Results: " + color.RED + str(line) + color.END)
 			endTime = time.time()
 			deltaTime = endTime - startTime
@@ -315,7 +313,7 @@ def readBackwards():
 				results_json = json.dumps(results, indent=2)
 				print(results_json, file=open("results.json", "a"))
 				print(color.ORANGE + "Results saved successfully in ./results.json!" + color.END)
-			sys.exit()
+			#sys.exit()
 	print(color.RED + "[-] Hash not found! Maybe another wordlist would help." + color.END)
 	sys.exit()
 
@@ -329,29 +327,29 @@ def readNormal():
 			elif hash_type == 1: #MD4
 				passwd_hash = MD4.new(passwd1.encode()).hexdigest()
 			elif hash_type == 2: #MD2
-				passwd_h = MD2.new(passwd1.encode()).hexdigest()
+				passwd_hash = MD2.new(passwd1.encode()).hexdigest()
 			elif hash_type == 3: #SHA1
-				passwd_h = hashlib.sha1(passwd1.encode()).hexdigest()
+				passwd_hash = hashlib.sha1(passwd1.encode()).hexdigest()
 			elif hash_type == 4: #SHA-224
-				passwd_h = hashlib.sha224(passwd1.encode()).hexdigest()
+				passwd_hash = hashlib.sha224(passwd1.encode()).hexdigest()
 			elif hash_type == 5: #SHA-256
-				passwd_h = hashlib.sha256(passwd1.encode()).hexdigest()
+				passwd_hash = hashlib.sha256(passwd1.encode()).hexdigest()
 			elif hash_type == 6: #SHA-384
-				passwd_h = hashlib.sha384(passwd1.encode()).hexdigest()
+				passwd_hash = hashlib.sha384(passwd1.encode()).hexdigest()
 			elif hash_type == 7: #SHA-512
-				passwd_h = hashlib.sha512(passwd1.encode()).hexdigest()
+				passwd_hash = hashlib.sha512(passwd1.encode()).hexdigest()
 			elif hash_type == 8: #SHA3-224
-				passwd_h = hashlib.sha3_224(passwd1.encode()).hexdigest()
+				passwd_hash = hashlib.sha3_224(passwd1.encode()).hexdigest()
 			elif hash_type == 9: #SHA3-256
-				passwd_h = hashlib.sha3_256(passwd1.encode()).hexdigest()
+				passwd_hash = hashlib.sha3_256(passwd1.encode()).hexdigest()
 			elif hash_type == 10: #SHA3-384
-				passwd_h = hashlib.sha3_384(passwd1.encode()).hexdigest()
+				passwd_hash = hashlib.sha3_384(passwd1.encode()).hexdigest()
 			elif hash_type == 11: #SHA3-512
-				passwd_h = hashlib.sha3_512(passwd1.encode()).hexdigest()
+				passwd_hash = hashlib.sha3_512(passwd1.encode()).hexdigest()
 			elif hash_type == 12: #BLAKE2s256
-				passwd_h = hashlib.new('blake2s256', passwd1.encode()).hexdigest()
+				passwd_hash = hashlib.new('blake2s256', passwd1.encode()).hexdigest()
 			elif hash_type == 13: #BLAKE2b512
-				passwd_h = hashlib.new('blake2b512', passwd1.encode()).hexdigest()
+				passwd_hash = hashlib.new('blake2b512', passwd1.encode()).hexdigest()
 			elif hash_type == 14: #NTLM
 				passwd_hash = hashlib.new('md4', passwd1.encode('utf-16le')).hexdigest()
 			elif hash_type == 15: #Whirlpool
