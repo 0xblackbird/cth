@@ -33,7 +33,7 @@ parser.add_argument("-I", "-interactive", action="store_true", default=False, he
 parser.add_argument("-v", "-verbose", action="store_true", default=False, help="Turn on verbosity mode (default: \"False\")")
 parser.add_argument("-L", "-list", action="store_true", default=False, help="Display all the hash types and exit")
 parser.add_argument("-u", "-update", action="store_true", default=False, help="Update the script to the latest version")
-parser.add_argument("-V", "-version", action="version", version="%(prog)s 2.3")
+parser.add_argument("-V", "-version", action="version", version="%(prog)s 2.4")
 args = parser.parse_args()
 
 user_hash = args.H
@@ -47,7 +47,7 @@ update = args.u
 interactive = args.I
 line = "-" * 110
 startTime = time.time()
-version = "2.3"
+version = "2.4"
 
 class color:
 	PURPLE = '\033[1;35;48m'
