@@ -23,6 +23,8 @@ import json
 import sys
 import os
 
+version = "2.5"
+
 parser = argparse.ArgumentParser(prog="cth.py", usage="./%(prog)s -H <HASH> [OPTIONS] -T <NUM> -w <WORDLIST>", description="Ultra fast hashcracking tool written in Python3", epilog="Thank you for using this tool! Please take a moment and give some feedback on the tool: @BE1807V or be1807v@pm.me")
 parser.add_argument("-H", "-hash", metavar="hash", default="", help="Your hash that you want to crack")
 parser.add_argument("-w", "-wordlist", metavar="wordlist", default="/usr/share/wordlists/rockyou.txt", help="The wordlist that is going to do the job (default: \"/usr/share/wordlists/rockyou.txt\")")
@@ -33,7 +35,7 @@ parser.add_argument("-I", "-interactive", action="store_true", default=False, he
 parser.add_argument("-v", "-verbose", action="store_true", default=False, help="Turn on verbosity mode (default: \"False\")")
 parser.add_argument("-L", "-list", action="store_true", default=False, help="Display all the hash types and exit")
 parser.add_argument("-u", "-update", action="store_true", default=False, help="Update the script to the latest version")
-parser.add_argument("-V", "-version", action="version", version="%(prog)s 2.4")
+parser.add_argument("-V", "-version", action="version", version="%(prog)s " + version)
 args = parser.parse_args()
 
 user_hash = args.H
@@ -47,7 +49,6 @@ update = args.u
 interactive = args.I
 line = "-" * 110
 startTime = time.time()
-version = "2.4"
 
 class color:
 	PURPLE = '\033[1;35;48m'
