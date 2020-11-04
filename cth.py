@@ -23,7 +23,7 @@ import json
 import sys
 import os
 
-version = "2.5"
+version = "2.5.2"
 
 parser = argparse.ArgumentParser(prog="cth.py", usage="./%(prog)s -H <HASH> [OPTIONS] -T <NUM> -w <WORDLIST>", description="Ultra fast hashcracking tool written in Python3", epilog="Thank you for using this tool! Please take a moment and give some feedback on the tool: @BE1807V or be1807v@pm.me")
 parser.add_argument("-H", "-hash", metavar="hash", default="", help="Your hash that you want to crack")
