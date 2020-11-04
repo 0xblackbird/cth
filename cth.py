@@ -86,7 +86,7 @@ typeText("@BE1807V", 0.035)
 
 if update == True:
 	file = os.path.abspath("cth.py")
-	url = "https://github.com/be1807v/cth/releases/download/v" + version  + "/cth.py"
+	url = "https://raw.githubusercontent.com/be1807v/cth/master/cth.py"
 
 	if os.path.isfile(file) == False:
 		print(color.RED + "[-] Error! I could not find the script to update! Please provide the installation path:" + color.END)
