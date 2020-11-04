@@ -61,7 +61,7 @@ class color:
 	BLACK = '\033[1;30;48m'
 	BLINK = '\033[1;6;48m'
 	END = '\033[1;37;0m'
-   
+
 def typeText(text, delay):
 	for i in text:
 		print(i, end = "")
@@ -70,13 +70,13 @@ def typeText(text, delay):
 	print("")
 
 print(color.RED + """
-   _____ _______ _    _ 
+   _____ _______ _    _
   / ____|__   __| |  | |
  | |       | |  | |__| |
  | |       | |  |  __  |
  | |____   | |  | |  | |
   \_____|  |_|  |_|  |_|
-                        
+
 """)
 sys.stdout.write("\033[F")
 typeText("CRACK THE HASH", 0.035)
@@ -86,12 +86,12 @@ typeText("@BE1807V", 0.035)
 
 if update == True:
 	file = os.path.abspath("cth.py")
-	url = "https://be1807v.github.io/assets/scripts/cth.py"
-	
+	url = "https://github.com/be1807v/cth/releases/download/v" + version  + "/cth.py"
+
 	if os.path.isfile(file) == False:
 		print(color.RED + "[-] Error! I could not find the script to update! Please provide the installation path:" + color.END)
 		file = str(input(color.BLUE + ">>> " + color.RED))
-	
+
 	get_data = urllib.request.urlopen("https://be1807v.github.io/cth.json")
 	if get_data.getcode() == 200:
 		jdata = get_data.read()
