@@ -2,9 +2,9 @@
 
 ####################################################
 #                                                  #
-#           Code made by @BE1807                   #
+#           Code made by @BE1807V                  #
 #     (40e219a80dfa2239c096e18bca46fd15) :)        #
-#						   #
+#						   						   #
 ####################################################
 from concurrent.futures import wait, FIRST_COMPLETED
 from pebble import ProcessPool
@@ -23,7 +23,8 @@ import json
 import sys
 import os
 
-version = "2.5.2"
+version = "2.5.5"
+rows, columns = os.popen("stty size", "r").read().split()
 
 parser = argparse.ArgumentParser(prog="cth.py", usage="./%(prog)s -H <HASH> [OPTIONS] -T <NUM> -w <WORDLIST>", description="Ultra fast hashcracking tool written in Python3", epilog="Thank you for using this tool! Please take a moment and give some feedback on the tool: @BE1807V or be1807v@pm.me")
 parser.add_argument("-H", "-hash", metavar="hash", default="", help="Your hash that you want to crack")
@@ -47,7 +48,7 @@ output_json = args.oJ
 list_types = args.L
 update = args.u
 interactive = args.I
-line = "-" * 110
+line = "-" * int(columns)
 startTime = time.time()
 
 class color:
@@ -86,7 +87,7 @@ typeText("@BE1807V", 0.035)
 
 if update == True:
 	file = os.path.abspath("cth.py")
-	url = "https://raw.githubusercontent.com/be1807v/cth/master/cth.py"
+	url = "https://github.com/be1807v/cth/releases/download/v" + version  + "/cth.py"
 
 	if os.path.isfile(file) == False:
 		print(color.RED + "[-] Error! I could not find the script to update! Please provide the installation path:" + color.END)
@@ -412,3 +413,4 @@ except SyntaxError:
 	sys.exit()
 except TypeError:
 	print(color.RED + "\n[-] Wrong value type given! Please kindly check what values you gave in." + color.END)
+	sys.exit()
