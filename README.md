@@ -15,7 +15,7 @@ A powerfull hash cracker that is written in python3! The cracker currently suppo
 - [ ] Using CPU to crack hashes
 
 # Installation
-**`$ git clone https://github.com/be1807v/cth.git cth`**
+**`$ git clone https://github.com/0xblackbird/cth.git cth`**
 
 **`$ cd cth/`**
 
@@ -45,20 +45,20 @@ optional arguments:
   -u, -update           Update the script to the latest version
   -V, -version          show program's version number and exit
 
-Thank you for using this tool! Please take a moment and give some feedback on the tool: @BE1807V
+Thank you for using this tool! Please take a moment and give some feedback on the tool: @0xblackbird
 or be1807v@pm.me
 
 ```
 
 # Examples
 MD5 hash cracking:
-![Example 0](https://github.com/be1807v/cth/blob/master/examples/example.png)
+![Example 0](https://github.com/0xblackbird/cth/blob/master/examples/example.png)
 
 SHA3-512 hash cracking:
-![Example 1](https://github.com/be1807v/cth/blob/master/examples/example-1.png)
+![Example 1](https://github.com/0xblackbird/cth/blob/master/examples/example-1.png)
 
 BLAKE2s hash cracking:
-![Example 2](https://github.com/be1807v/cth/blob/master/examples/example-2.png)
+![Example 2](https://github.com/0xblackbird/cth/blob/master/examples/example-2.png)
 
 NTLM hash cracking:
-![Example 3](https://github.com/be1807v/cth/blob/master/examples/example-3.png)
+![Example 3](https://github.com/0xblackbird/cth/blob/master/examples/example-3.png)
