@@ -2,9 +2,9 @@
 
 ####################################################
 #                                                  #
-#           Code made by @BE1807V                  #
+#           Code made by @0xblackbird              #
 #     (40e219a80dfa2239c096e18bca46fd15) :)        #
-#						   						   #
+#                                                  #
 ####################################################
 from concurrent.futures import wait, FIRST_COMPLETED
 from pebble import ProcessPool
@@ -23,10 +23,10 @@ import json
 import sys
 import os
 
-version = "2.5.5"
+version = "2.5.6"
 rows, columns = os.popen("stty size", "r").read().split()
 
-parser = argparse.ArgumentParser(prog="cth.py", usage="./%(prog)s -H <HASH> [OPTIONS] -T <NUM> -w <WORDLIST>", description="Ultra fast hashcracking tool written in Python3", epilog="Thank you for using this tool! Please take a moment and give some feedback on the tool: @BE1807V or be1807v@pm.me")
+parser = argparse.ArgumentParser(prog="cth.py", usage="./%(prog)s -H <HASH> [OPTIONS] -T <NUM> -w <WORDLIST>", description="Ultra fast hashcracking tool written in Python3", epilog="Thank you for using this tool! Please take a moment and give some feedback on the tool: @0xblackbird or be1807v@pm.me")
 parser.add_argument("-H", "-hash", metavar="hash", default="", help="Your hash that you want to crack")
 parser.add_argument("-w", "-wordlist", metavar="wordlist", default="/usr/share/wordlists/rockyou.txt", help="The wordlist that is going to do the job (default: \"/usr/share/wordlists/rockyou.txt\")")
 parser.add_argument("-T", "-type", metavar="type", type=int, default=0, help="Specify the hash type, use \"-L/-list\" for more info (default: \"0\" (md-5))")
@@ -83,17 +83,17 @@ sys.stdout.write("\033[F")
 typeText("CRACK THE HASH", 0.035)
 print(color.CYAN)
 sys.stdout.write("\033[F")
-typeText("@BE1807V", 0.035)
+typeText("@0xblackbird", 0.035)
 
 if update == True:
 	file = os.path.abspath("cth.py")
-	url = "https://github.com/be1807v/cth/releases/download/v" + version  + "/cth.py"
+	url = "https://github.com/0xblackbird/cth/releases/download/v" + version  + "/cth.py"
 
 	if os.path.isfile(file) == False:
 		print(color.RED + "[-] Error! I could not find the script to update! Please provide the installation path:" + color.END)
 		file = str(input(color.BLUE + ">>> " + color.RED))
 
-	get_data = urllib.request.urlopen("https://be1807v.github.io/cth.json")
+	get_data = urllib.request.urlopen("https://0xblackbird.github.io/cth.json")
 	if get_data.getcode() == 200:
 		jdata = get_data.read()
 		jsonData = json.loads(jdata)
