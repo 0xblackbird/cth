@@ -23,7 +23,7 @@ import json
 import sys
 import os
 
-version = "2.5.6"
+version = "2.5.7"
 rows, columns = os.popen("stty size", "r").read().split()
 
 parser = argparse.ArgumentParser(prog="cth.py", usage="./%(prog)s -H <HASH> [OPTIONS] -T <NUM> -w <WORDLIST>", description="Ultra fast hashcracking tool written in Python3", epilog="Thank you for using this tool! Please take a moment and give some feedback on the tool: @0xblackbird or be1807v@pm.me")
@@ -88,16 +88,16 @@ typeText("@0xblackbird", 0.035)
 if update == True:
 	file = os.path.abspath("cth.py")
 	url = "https://github.com/0xblackbird/cth/releases/download/v" + version  + "/cth.py"
+	jsonFile = "https://0xblackbird.github.io/data.json"
 
 	if os.path.isfile(file) == False:
 		print(color.RED + "[-] Error! I could not find the script to update! Please provide the installation path:" + color.END)
 		file = str(input(color.BLUE + ">>> " + color.RED))
 
-	get_data = urllib.request.urlopen("https://0xblackbird.github.io/cth.json")
+	get_data = urllib.request.urlopen(jsonFile)
 	if get_data.getcode() == 200:
-		jdata = get_data.read()
-		jsonData = json.loads(jdata)
-		current_version = jsonData["version"]
+		jsonData = json.loads(get_data.read())
+		current_version = jsonData['tools']['tool0']['version']
 		if current_version == version:
 			print(color.GREEN + "[+] You already have the latest version of CTH! v" + current_version + color.END)
 			sys.exit()
