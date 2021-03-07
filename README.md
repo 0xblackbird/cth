@@ -1,8 +1,8 @@
 # Crack The Hash
 Ultra fast hashcracking tool written in Python3
 
-# Update [v2.5.6]
-- Modified the update url
+# Update [v2.5.7]
+- Modified url to check for latest version number (you'll most likely have to reinstall the script instead of updating it using the `-u/-update` flag)
 
 # Description
 A powerfull hash cracker that is written in python3! The cracker currently supports only a limited amount of hash types (more hash types will eventually follow!). The cracking speed depends on your hardware or on the wordlist, you can choose. I hope you enjoy it! Feedback on the tool is appreciated! Also, feel free to contribute and make a pull request! That's why I choosed for Open Source :)!
