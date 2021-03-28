@@ -7,6 +7,9 @@ Ultra fast hashcracking tool written in Python3
 # Description
 A powerfull hash cracker that is written in python3! The cracker currently supports only a limited amount of hash types (more hash types will eventually follow!). The cracking speed depends on your hardware or on the wordlist, you can choose. I hope you enjoy it! Feedback on the tool is appreciated! Also, feel free to contribute and make a pull request! That's why I choosed for Open Source :)!
 
+# Disclaimer (PLEASE READ) !!!
+**I made this tool to help me quickly crack hashes for ctfs! Please do not use this tool to cause any harm! I am not responsible for any misuse or damage made by this tool!**
+
 # Todo
 - [ ] Add hash detection
 - [ ] Add more hashtypes
